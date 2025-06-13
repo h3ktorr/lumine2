@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&family=Irish+Grover&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Irish+Grover&family=Itim&family=Jacques+Francois+Shadow&display=swap');
+
 @import "tailwindcss";
 
 :root {
@@ -8,7 +9,9 @@
 
 @theme {
   --color-background: var(--foreground);
-  --font-Irish: "Irish Grover"
+  --font-Irish: "Irish Grover";
+  --font-Jacques: "Jacques Francois Shadow";
+  --font-Itim: "itim";
 }
 
 .small-screen {

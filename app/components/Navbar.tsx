@@ -24,7 +24,7 @@ const Navbar = () => {
           height={20}
         />
       </div>
-      <ul className="big-screen flex items-center gap-8 md:gap-10 text-xl font-Irish">
+      <ul className="big-screen flex items-center gap-8 md:gap-10 text-lg font-Irish">
         <li 
           onClick={() => setMenu("shop")}
         > 
