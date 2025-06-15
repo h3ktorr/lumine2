@@ -15,21 +15,58 @@ interface Props{
 const Item = (props: Props) => {
  const { id, image, price, name } = props;
  const [index, setIndex] = useState(0);
+ const [isHovered, setIsHovered] = useState(false);
+ const sizes = ["XXL", "XL", "L", "M", "S", "XS", "XXS"];
+ const [selectedSize, setSelectedSize] = useState("");
+
+ const handleMouseEnter = () => {
+  setIsHovered(true);
+ };
+
+ const handleMouseLeave = () => {
+   setIsHovered(false);
+ };
+
+ const handleSizeChange = (sizeId:number, sizeName:string) => {
+  setSelectedSize(sizeName);
+};
 
   return (
     <div className="w-full font-Itim overflow-hidden h-full basis-full">
-     <div className="">
-      <div className="relative h-full w-full">
-       <div className="absolute flex h-full top-[9rem] w-full">
-        <div className={"absolute text-xl"}>
+     <div 
+      className="" 
+      onMouseEnter={handleMouseEnter} 
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="relative h-full hidden lg:block  w-full">
+       <div className="absolute flex h-full top-[10rem]  w-full">
+        <div className={isHovered ? "absolute text-xl left-2 transition-all duration-500" : "absolute text-xl -left-4 transition-all duration-500"}>
         <ChevronLeft size={24} color="#000" />
         </div>
-        <div className={"absolute text-xl right-0"}>
+        <div className={isHovered ? "absolute text-xl right-2 transition-all duration-500": "absolute text-xl -right-4 transition-all duration-500"}>
         <ChevronRight size={24} color="#000" />
         </div>
        </div>
-       <div className="absolute flex w-full ">
-        Size
+       <div 
+        className={isHovered ? "absolute flex w-full justify-between transition-all duration-500 items-center h-8 gap-1 bg-[#d6d2d2] top-0" : "absolute flex w-full justify-between transition-all duration-500 items-center h-8 gap-1 bg-[#d6d2d2] -top-8"}
+      >
+        {sizes.map((size, sizeIndex) => (
+          <div 
+            className="w-9 text-center border-black border-[.1rem] cursor-pointer hover:bg-white"
+            key={sizeIndex}
+            onClick={() => handleSizeChange(id, size)}
+            style={
+              selectedSize === size
+                ? {
+                    color: "white",
+                    backgroundColor: "black",
+                  }
+                : {}
+            }
+          >
+            {size}
+          </div>
+        ))}
        </div>
       </div>
       <div className="">
@@ -42,8 +79,8 @@ const Item = (props: Props) => {
        </Link>
       </div>
      </div>
-     <p className="">{name}</p>
-     <p className="">{price}</p>
+     <p className="text-[.9rem] md:text-base">{name}</p>
+     <p className="text-[.9rem] md:text-base">{price}</p>
     </div>
   )
 }

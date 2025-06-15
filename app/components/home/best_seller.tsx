@@ -3,9 +3,9 @@ import Item from '../item'
 
 const Best_sellers = () => {
   return (
-    <div className="w-full overflow-hidden mt-12 flex flex-col">
-     <h1 className="font-Irish text-2xl cursor-pointer">Best Sellers</h1>
-     <div className="grid w-full grid-cols-3 mt-4 gap-4">
+    <div className="w-full overflow-hidden mt-14 flex flex-col">
+     <h1 className="font-Irish text-xl md:text-2xl cursor-pointer">Best Sellers</h1>
+     <div className="grid w-full grid-cols-2 md:grid-cols-3 mt-4 gap-4">
      {bestsellers.map(item=>{
         // console.log(item.image);
         const images = [...item.image]
