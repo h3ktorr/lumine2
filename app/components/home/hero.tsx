@@ -8,7 +8,7 @@ const Hero = () => {
        </h2>
        <button className="bg-black text-white rounded-lg text-xl md:text-2xl p-2 font-Itim w-[30%] h-8 md:h-12 cursor-pointer md:mt-8 flex justify-center items-center mt-2">Shop</button>
       </div>
-      <div className="ml-auto ">
+      <div className="ml-auto">
       <img 
         src='/home_hero.jpg'
         alt=""

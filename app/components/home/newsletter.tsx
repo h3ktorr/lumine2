@@ -1,6 +1,6 @@
 const Newsletter = () => {
   return (
-    <div className="w-full min-h-24  md:min-h-40 newsletter_gradient flex flex-col sm:flex-row justify-around items-center font-Jomolhari mt-14">
+    <div className="w-full min-h-24  md:min-h-40 newsletter_gradient flex flex-col sm:flex-row justify-around items-center gap-2 font-Jomolhari mt-14 max-xs:p-2 p-4">
      <h1 className="text-white text-base md:text-xl lg:text-2xl hidden sm:block">
         Sign up now to get alerts <br /> for new product drops
       </h1>
