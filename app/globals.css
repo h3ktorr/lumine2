@@ -25,6 +25,14 @@
   background: linear-gradient(90deg, rgba(89, 88, 93, 1) 0%, rgba(204, 203, 208, 1) 53%, rgba(89, 88, 93, 1) 100%, rgba(204, 203, 208, 1) 62%, rgba(204, 203, 208, 1) 100%);
 }
 
+.mens_footwear_gradient {
+  background: linear-gradient(90deg, rgba(89, 88, 93, 1) 0%, rgba(204, 203, 208, 1) 53%, rgba(89, 88, 93, 1) 100%, rgba(204, 203, 208, 1) 62%, rgba(204, 203, 208, 1) 100%);
+}
+
+.womens_footwear_gradient {
+  background: linear-gradient(42deg, rgba(247, 246, 244, 1) 0%, rgba(234, 223, 196, 1) 72%, rgba(219, 194, 138, 1) 92%, rgba(234, 223, 196, 1) 99%);
+}
+
 .newsletter_gradient{
   background: linear-gradient(180deg, rgba(68, 60, 60, 1) 0%, rgba(102, 56, 56, 1) 43%, rgba(250, 158, 158, 1) 100%);
 }
