@@ -2,14 +2,16 @@
 
 import Image from "next/image"
 import { AlignJustify, ShoppingCart, Search, User } from "@deemlol/next-icons";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Link from "next/link";
+import { ShopContext } from "../context/ShopContext";
 
 const Navbar = () => {
   const [menu, setMenu] = useState("shop");
+  const { openCart } = useContext(ShopContext)!;
 
   return (
-    <div className="flex justify-around items-center p-3 shadow-[0_1px_3px_-2px_rgb(0,0,0)] fixed w-full z-50 min-h-[3.5rem] top-0 bg-white mb-0">
+    <div className="flex justify-around items-center p-3 shadow-[0_1px_3px_-2px_rgb(0,0,0)] fixed w-full z-30 min-h-[3.5rem] top-0 bg-white mb-0">
       <div className="small-screen">
         <AlignJustify size={24} color="#000" />
       </div>
@@ -46,7 +48,9 @@ const Navbar = () => {
       </ul>
       <div className="flex items-center gap-4 md:gap-6">
         <Search size={24} color="#000" className="big-screen cursor-pointer" />
-        <ShoppingCart size={24} color="#000" className="cursor-pointer" />
+        <ShoppingCart size={24} color="#000" className="cursor-pointer"
+         onClick={openCart}
+        />
         <User size={24} color="#000" className="big-screen cursor-pointer" />
       </div>
     </div>

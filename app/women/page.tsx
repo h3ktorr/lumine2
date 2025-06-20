@@ -11,7 +11,7 @@ import Womens_top from "../components/women/womens_top"
 
 const Women = () => {
  return (
-   <div className="mt-14 max-w-[90vw] m-auto flex flex-col items-center">
+   <div className="mt-14 w-[90vw] m-auto flex flex-col items-center">
     <Womens_hero />
     <Womens_outerwear />
     <Womens_top />

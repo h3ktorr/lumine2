@@ -10,7 +10,7 @@ import Mens_top from "../components/men/mens_top"
 
 const Men = () => {
   return (
-    <div className="mt-14 max-w-[90vw] m-auto flex flex-col items-center">
+    <div className="mt-14 w-[90vw] m-auto flex flex-col items-center">
      <Mens_hero />
      <Mens_outerwear />
      <Mens_top />

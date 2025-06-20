@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ShopContextProvider from "./context/ShopContext";
+import Cart from "./components/Cart";
 
 export const metadata: Metadata = {
   title: "Lumine",
@@ -15,13 +17,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`h-full`}
-      >
-        <Navbar />
-        {children}
-        <Footer />
-      </body>
+      <ShopContextProvider>
+        <body
+        className={`h-full w-full flex flex-col`}
+        >
+          <Navbar />
+          <Cart />
+          {children}
+          <Footer />
+        </body>
+      </ShopContextProvider>
     </html>
   );
 }

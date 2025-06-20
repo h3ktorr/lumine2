@@ -21,6 +21,10 @@
   display: none;
 }
 
+.cart_background{
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 .holiday_sale_gradient {
   background: linear-gradient(90deg, rgba(89, 88, 93, 1) 0%, rgba(204, 203, 208, 1) 53%, rgba(89, 88, 93, 1) 100%, rgba(204, 203, 208, 1) 62%, rgba(204, 203, 208, 1) 100%);
 }
