@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ShopContextProvider from "./context/ShopContext";
 import Cart from "./components/Cart";
+import Sidebar from "./components/Sidebar";
 
 export const metadata: Metadata = {
   title: "Lumine",
@@ -23,6 +24,7 @@ export default function RootLayout({
         >
           <Navbar />
           <Cart />
+          <Sidebar />
           {children}
           <Footer />
         </body>

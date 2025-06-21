@@ -8,11 +8,11 @@ import { ShopContext } from "../context/ShopContext";
 
 const Navbar = () => {
   const [menu, setMenu] = useState("shop");
-  const { openCart } = useContext(ShopContext)!;
+  const { openCart, openSidebar } = useContext(ShopContext)!;
 
   return (
     <div className="flex justify-around items-center p-3 shadow-[0_1px_3px_-2px_rgb(0,0,0)] fixed w-full z-30 min-h-[3.5rem] top-0 bg-white mb-0">
-      <div className="small-screen">
+      <div className="small-screen" onClick={openSidebar}>
         <AlignJustify size={24} color="#000" />
       </div>
       <div 
