@@ -81,8 +81,8 @@ const Product_display = () => {
  }, [index]);
 
   return (
-    <div className='flex gap-8 font-Jomolhari w-full'>
-     <div className="relative w-[60ch] h-screen">
+    <div className='flex flex-col xm:flex-row gap-8 font-Jomolhari w-full items-center'>
+     <div className="relative w-full xm:w-[60ch] h-[calc(100vh-56px)]">
      {product.image.map((image, imageIndex) => {
           let position = "nextSlide";
           if (imageIndex === index) {
@@ -99,8 +99,8 @@ const Product_display = () => {
              src={image} 
              alt="" 
              key={imageIndex} 
-             style={{ width: "100%", objectFit: "contain" }}
-             className={`${position} absolute transition-all duration-1000`} />
+             style={{ width: "100%", height: '100%' }}
+             className={`${position} absolute object-cover xm:object-contain transition-all duration-1000`} />
           );
         })}
         <button className="absolute z-20 bg-black w-6 h-6 my-0 mx-1 grid place-items-center border-transparent text-base rounded-[5px] cursor-pointer top-[50%] left-0 " onClick={prevSlide}>
@@ -110,15 +110,15 @@ const Product_display = () => {
          <ChevronRight size={24} color="#fff" />
         </button>
      </div>
-     <div className="flex-1 my-6 mx-0">
+     <div className="flex-1 flex flex-col gap-2 sm:flex-row sm:gap-4 xm:gap-2 xm:flex-col my-6 mx-0">
       <div className="mb-8">
-       <p className="mb-1 text-xl">{product.name}</p>
-       <p className="mb-1">{product.price}</p>
-       <p className="mb-1">{product.category}</p>
+       <p className="mb-1 text-base sm:text-xl">{product.name}</p>
+       <p className="mb-1 text-[.9rem] sm:text-base">${product.price}</p>
+       <p className="mb-1 text-[.9rem] sm:text-base">{product.category}</p>
       </div>
-      <div className="bg-[#D9D9D9] py-2 px-4 w-2/3">
+      <div className="bg-[#D9D9D9] py-2 px-4 lg:w-2/3 w-full text-[.9rem] sm:text-base">
        <p className="">Select price</p>
-       <div className="">
+       <div className="mt-2">
        {sizes.map((size, sizeIndex) => (
         <div
           key={sizeIndex}
@@ -137,7 +137,7 @@ const Product_display = () => {
           </div>
         ))}
        </div>
-       <button className={sizeSelected ? "bg-black text-white rounded-[10px] text-xl p-2 font-Itim mt-4 w-full transition-all duration-500 hover:cursor-pointer hover:bg-[#9c7474]" :"bg-[#696565] text-white rounded-[10px] text-xl p-2 font-Itim mt-4 w-full transition-all duration-500"}>
+       <button className={sizeSelected ? "bg-black text-white rounded-[10px] text-base sm:text-xl p-2 font-Itim mt-4 w-full transition-all duration-500 hover:cursor-pointer hover:bg-[#9c7474]" :"bg-[#696565] text-white rounded-[10px] text-base sm:text-xl p-2 font-Itim mt-4 w-full transition-all duration-500"}>
        {sizeSelected ? "Add To Cart" : "Select A Size"}
        </button>
       </div>

@@ -13,7 +13,7 @@ const Footer = () => {
           <li>Accessories</li>
         </ul>
       </div>
-      <div className="w-full  flex flex-col items-center row-start-2 col-start-1 col-end-3 m-auto mt-8 self-center ">
+      <div className="w-full  flex flex-col items-center row-start-2 col-start-1 col-end-3 m-auto mt-8 self-center max-xs:order-3">
         <h1 className="font-Irish text-xl md:text-2xl">Follow us At</h1>
         <div className="mt-6 text-white flex gap-2 sm:gap-4">
           <FaXTwitter className="w-14 h-5 md:h-7"/>

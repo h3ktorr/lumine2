@@ -35,9 +35,9 @@ const Cart = () => {
      onClick={handleCartClose}
      className={isCartOpen ? "fixed z-50 top-0 self-end w-full cart_background opacity-100 overflow-auto translate-x-0 transition-all duration-500 ease-in h-full" : "fixed z-50 top-0 self-end w-full cart_background opacity-0 overflow-hidden translate-x-full transition-all duration-500 ease-in h-full"}
     >
-     <div className="bg-white ml-auto w-[40vw] p-4 relative">
+     <div className="bg-white ml-auto w-[80vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] xl:w-[40vw] p-4 relative">
       <div className="flex w-full justify-between p-4 border-black border-b-[3px]">
-       <h1 className="font-Irish text-2xl">Shopping Cart</h1>
+       <h1 className="font-Irish text-xl sm:text-2xl">Shopping Cart</h1>
        <X size={24} color="#000" className="cursor-pointer" onClick={closeCart}/>
       </div>
       <Cart_items /> 

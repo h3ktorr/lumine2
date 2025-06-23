@@ -4,7 +4,7 @@ import Item from "../item"
 const Cart_shopmore = () => {
   return (
     <div className="my-8 mx-0 flex flex-col">
-     <h1 className="font-Irish text-xl font-medium">Shop More</h1>
+     <h1 className="font-Irish text-[1.1rem] sm:text-xl font-medium">Shop More</h1>
      <div className="flex mt-4 gap-5">
      {bestsellers.slice(0, 2).map(item=>{
         // console.log(item.image);

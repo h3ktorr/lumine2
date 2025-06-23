@@ -10,12 +10,11 @@ const Cart_items = () => {
        <Image 
         src={test_img} 
         alt="" 
-        width={80}
-        height={80}
+        style={{ width: "6rem", height: '6rem', objectFit: 'cover' }}
        />
       </div>
-      <div className="ml-4 flex flex-col py-2 px-0 font-Jomolhari text-base">
-       <p className="">Wyona Full Zip Varsity Sweater</p>
+      <div className="ml-4 flex flex-col py-2 px-0 font-Jomolhari text-[.8rem] sm:text-base mr-2">
+       <p className="text-[.9rem] sm:text-base">Wyona Full Zip Varsity Sweater</p>
        <p className="">L</p>
        <div className="flex mt-auto items-center">
         <Minus size={15} color="#000" className="mr-1.5" />
@@ -23,7 +22,7 @@ const Cart_items = () => {
         <Plus size={15} color="#000" className="mr-1.5"/>
        </div>
       </div>
-      <div className="ml-auto flex flex-col justify-between py-2 px-0 font-Jomolhari">
+      <div className="ml-auto flex flex-col justify-between py-2 px-0 font-Jomolhari text-[.8rem] sm:text-base">
        <p className="">$200</p>
        <Trash2 size={20} color="#000" />
       </div>
