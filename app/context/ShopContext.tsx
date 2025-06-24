@@ -19,10 +19,13 @@ export type SidebarItem = {
 type ShopContextType = {
  isCartOpen: boolean;
  isSidebarOpen: boolean;
+ isAllCollectionsOpen: boolean;
  openCart: () => void;
  closeCart: () => void;
  openSidebar: () => void;
  closeSidebar: () => void;
+ openAllCollections: () => void;
+ closeAllCollections: () => void;
  sidebarLinks: SidebarItem[];
  handleCategory: (id: number) => void;
 };
@@ -36,6 +39,7 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = ({ children }) =
  const [isCartOpen, setIsCartOpen] = useState(false);
  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
  const [sidebarLinks, setSidebarLinks] = useState(sidebar_data);
+ const [isAllCollectionsOpen, setIsAllCollectionsOpen] = useState(true)
 
  const openCart = () => {
   setIsCartOpen(true);
@@ -50,6 +54,14 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = ({ children }) =
  const closeSidebar = () => {
    setIsSidebarOpen(false)
  };
+
+ const openAllCollections = () => {
+  setIsAllCollectionsOpen(true);
+  
+ }
+ const closeAllCollections = () => {
+  setIsAllCollectionsOpen(false);
+ }
 
  const handleCategory = (id: number) => {
   const updatedLinks = sidebarLinks.map(link => {
@@ -70,6 +82,9 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = ({ children }) =
   closeSidebar,
   sidebarLinks,
   handleCategory,
+  isAllCollectionsOpen,
+  openAllCollections,
+  closeAllCollections,
  }
 
  return (

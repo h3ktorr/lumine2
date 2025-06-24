@@ -45,6 +45,20 @@
   visibility: hidden;
 }
 
+.scroll-hidden {
+  overflow: auto;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* Internet Explorer */
+
+  /* Webkit (Chrome, Safari) */
+}
+
+.scroll-hidden::-webkit-scrollbar {
+  display: none;
+}
+
 @media screen and (max-width: 740px) {
   .recommended-items>:last-child {
     display: none;

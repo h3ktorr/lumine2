@@ -4,6 +4,7 @@ import Hero from "./components/home/hero";
 import Holiday_sale from "./components/home/holiday_sale";
 import Newsletter from "./components/home/newsletter";
 import Now_in_sale from "./components/home/now_in_sale";
+import Shop_all_collections from "./components/home/shop_all_collections";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
           <Hero />
           <Best_sellers />
           <Collection_button />
+          <Shop_all_collections />
           <Holiday_sale />
           <Now_in_sale />
           <Newsletter />
