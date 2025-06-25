@@ -39,7 +39,7 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = ({ children }) =
  const [isCartOpen, setIsCartOpen] = useState(false);
  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
  const [sidebarLinks, setSidebarLinks] = useState(sidebar_data);
- const [isAllCollectionsOpen, setIsAllCollectionsOpen] = useState(true)
+ const [isAllCollectionsOpen, setIsAllCollectionsOpen] = useState(false)
 
  const openCart = () => {
   setIsCartOpen(true);

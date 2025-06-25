@@ -1,4 +1,5 @@
 import Womens_exploreButton from "../components/women/explore_womenbutton"
+import Shop_all_women from "../components/women/shop_all_women"
 import Womens_accessories from "../components/women/womens_accessories"
 import Womens_Bottom from "../components/women/womens_bottom"
 import Womens_Dress from "../components/women/womens_dress"
@@ -22,6 +23,7 @@ const Women = () => {
     <Womens_footwearHero />
     <Womens_footwear />
     <Womens_exploreButton />
+    <Shop_all_women />
    </div>
  )
 }

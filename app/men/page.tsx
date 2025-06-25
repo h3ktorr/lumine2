@@ -7,6 +7,7 @@ import Mens_hero from "../components/men/mens_hero"
 import Mens_newArrival from "../components/men/mens_newarrival"
 import Mens_outerwear from "../components/men/mens_outerwear"
 import Mens_top from "../components/men/mens_top"
+import Shop_all_men from "../components/men/shop_all_men"
 
 const Men = () => {
   return (
@@ -20,6 +21,7 @@ const Men = () => {
      <Mens_footwearHero />
      <Mens_footwear />
      <Mens_exploreButton />
+     <Shop_all_men />
     </div>
   )
 }
