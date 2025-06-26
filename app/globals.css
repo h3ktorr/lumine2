@@ -26,6 +26,10 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+.men_accessories_bg{
+  background-image: url(./assets/accessory.jpg);
+}
+
 .activeSlide {
   opacity: 1;
   transform: translateX(0);
