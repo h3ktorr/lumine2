@@ -27,7 +27,11 @@
 }
 
 .men_accessories_bg{
-  background-image: url(./assets/accessory.jpg);
+  background-image: url(./assets/mens_accessory.jpg);
+}
+
+.men_bottom_bg{
+  background-image: url(./assets/mens_bottom.jpg);
 }
 
 .activeSlide {
