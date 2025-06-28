@@ -38,6 +38,10 @@
   background-image: url(./assets/mens_footwear.jpg);
 }
 
+.men_top_bg{
+  background-image: url(./assets/mens_top.jpg);
+}
+
 .activeSlide {
   opacity: 1;
   transform: translateX(0);
