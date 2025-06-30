@@ -46,6 +46,10 @@
   background-image: url(./assets/mens_outerwear.jpg);
 }
 
+.women_outerwear_bg{
+  background-image: url(./assets/womens_accessory.jpg);
+}
+
 .activeSlide {
   opacity: 1;
   transform: translateX(0);
