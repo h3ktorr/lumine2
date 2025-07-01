@@ -46,8 +46,12 @@
   background-image: url(./assets/mens_outerwear.jpg);
 }
 
-.women_outerwear_bg{
+.women_accessories_bg{
   background-image: url(./assets/womens_accessory.jpg);
+}
+
+.women_bottom_bg{
+  background-image: url(./assets/womens_bottom.jpg);
 }
 
 .activeSlide {
