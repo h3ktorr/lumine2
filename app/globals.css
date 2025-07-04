@@ -58,6 +58,14 @@
   background-image: url(./assets/womens_dress.jpg);
 }
 
+.women_footwear_bg{
+  background-image: url(./assets/womens_footwear.jpg);
+}
+
+.women_outerwear_bg{
+  background-image: url(./assets/womens_outerwear.jpg);
+}
+
 .activeSlide {
   opacity: 1;
   transform: translateX(0);
