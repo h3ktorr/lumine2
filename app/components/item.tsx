@@ -7,7 +7,7 @@ import Image, { StaticImageData } from "next/image";
 
 interface Props{
  id: number;
- image: StaticImageData[]; 
+ image: string[]; 
  price: number; 
  name: string;
 }
@@ -31,6 +31,15 @@ const Item = (props: Props) => {
   setSelectedSize(sizeName);
 };
 
+const handleNextImage = () => {
+  setIndex((prev) => (prev + 1) % image.length); 
+};
+
+const handlePrevImage = () => {
+  setIndex((prev) => (prev - 1 + image.length) % image.length);
+};
+
+
   return (
     <div className="w-full font-Itim overflow-hidden h-full basis-full">
      <div 
@@ -41,10 +50,10 @@ const Item = (props: Props) => {
       <div className="relative h-full hidden lg:block  w-full">
        <div className="absolute flex h-full top-[10rem]  w-full">
         <div className={isHovered ? "absolute text-xl left-2 transition-all duration-500" : "absolute text-xl -left-4 transition-all duration-500"}>
-        <ChevronLeft size={24} color="#000" />
+        <ChevronLeft size={24} color="#000" onClick={handlePrevImage}/>
         </div>
         <div className={isHovered ? "absolute text-xl right-2 transition-all duration-500": "absolute text-xl -right-4 transition-all duration-500"}>
-        <ChevronRight size={24} color="#000" />
+        <ChevronRight size={24} color="#000" onClick={handleNextImage}/>
         </div>
        </div>
        <div 
@@ -75,12 +84,14 @@ const Item = (props: Props) => {
          src={image[index]}
          alt=""
          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+         width={500} 
+         height={500}
         />
        </Link>
       </div>
      </div>
      <p className="text-[.9rem] md:text-base">{name}</p>
-     <p className="text-[.9rem] md:text-base">{price}</p>
+     <p className="text-[.9rem] md:text-base">${price}</p>
     </div>
   )
 }

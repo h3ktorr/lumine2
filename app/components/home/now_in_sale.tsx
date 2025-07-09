@@ -1,22 +1,34 @@
-import bestsellers from '../bestsellers'
+import { wixClientServer } from '@/app/lib/wixClientServer';
 import Item from '../item'
+import { Suspense } from 'react';
+import { products } from '@wix/stores';
+ 
+const Now_in_sale = async() => {
+  const categoryId = process.env.NOW_IN_SALE_CATEGORY_ID!
+  
+  const wixClient = await wixClientServer();
+  const res = await wixClient.products
+  .queryProducts()
+  .eq('collectionIds', categoryId)
+  .limit(6)
+  .find();
 
-const Now_in_sale = () => {
   return (
     <div className="w-full overflow-hidden mt-14 flex flex-col">
      <h1 className="font-Irish text-xl md:text-2xl cursor-pointer">Now in Sale</h1>
      <div className="grid w-full grid-cols-2 md:grid-cols-3 mt-4 gap-4">
-     {bestsellers.map(item=>{
-        // console.log(item.image);
-        const images = [...item.image]
+     {res.items.map((product:products.Product)=>{
+        const images = product.media?.items?.map(item => item.image?.url || "");
+        
         return (
-          <Item 
-            key={item.id}
-            id={item.id}
-            name={item.name}
-            image={images}
-            price={item.price}
-          />
+          <Suspense fallback={'loading'} key={product._id}>
+            <Item
+              id={Number(product._id)}
+              name={product.name || ""}
+              image={images!}
+              price={product.priceData?.price || 0}
+            />
+          </Suspense>
         )
       })}
      </div>
