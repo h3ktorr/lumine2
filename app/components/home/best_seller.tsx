@@ -19,8 +19,6 @@ const Best_sellers = async() => {
      <div className="grid w-full grid-cols-2 md:grid-cols-3 mt-4 gap-4">
      {res.items.map((product:products.Product)=>{
         const images = product.media?.items?.map(item => item.image?.url || "");
-
-        console.log(product._id);
         
         return (
           <Suspense fallback={'loading'} key={product._id}>
