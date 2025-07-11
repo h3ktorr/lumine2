@@ -27,6 +27,7 @@ const Mens_footwear = async() => {
               name={product.name || ""}
               image={images!}
               price={product.priceData?.price || 0}
+              slug={product.slug!}
             />
           </Suspense>
         )

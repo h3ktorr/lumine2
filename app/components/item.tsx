@@ -10,10 +10,11 @@ interface Props{
  image: string[]; 
  price: number; 
  name: string;
+ slug: string;
 }
 
 const Item = (props: Props) => {
- const { id, image, price, name } = props;
+ const { id, image, price, name, slug } = props;
  const [index, setIndex] = useState(0);
  const [isHovered, setIsHovered] = useState(false);
  const sizes = ["XXL", "XL", "L", "M", "S", "XS", "XXS"];
@@ -79,7 +80,7 @@ const handlePrevImage = () => {
        </div>
       </div>
       <div className="">
-       <Link href='/'>
+       <Link href={`/product/${slug}`}>
         <Image
          src={image[index]}
          alt=""
