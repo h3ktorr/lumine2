@@ -5,6 +5,7 @@ import { products, collections } from "@wix/stores";
 import Cookie from "js-cookie";
 import { createContext, ReactNode } from "react";
 
+
 const refreshToken = JSON.parse(Cookie.get("refreshToken") || "{}");
 
 const wixClient = createClient({
