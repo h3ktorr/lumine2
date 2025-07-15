@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@deemlol/next-icons": "^0.1.9",
+    "@wix/ecom": "^1.0.1241",
     "@wix/media": "^1.0.171",
     "@wix/members": "^1.0.302",
     "@wix/sdk": "^1.15.24",

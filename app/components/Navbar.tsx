@@ -4,6 +4,7 @@ import Image from "next/image"
 import { AlignJustify, ShoppingCart, Search, User } from "@deemlol/next-icons";
 import { useContext, useState } from "react";
 import Link from "next/link";
+import Cookie from 'js-cookie';
 import { ShopContext } from "../context/ShopContext";
 import { useWixClient } from "../hooks/useWixClient";
 
@@ -12,19 +13,28 @@ const Navbar = () => {
   const { openCart, openSidebar } = useContext(ShopContext)!;
 
   const wixClient = useWixClient()
+  const isLoggedIn = wixClient.auth.loggedIn()
 
-  const login = async() => {
-    const loginRequestData = wixClient.auth.generateOAuthData(
-      "http://localhost:3000/callback", // Redirect URI
-      "http://localhost:3000", //Original URI
-    );
-
-    console.log(loginRequestData);
-
-    localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData))
-    const {authUrl} = await wixClient.auth.getAuthUrl(loginRequestData)
-    window.location.href = authUrl;
+  const handleUser = async() => {
+    if(!isLoggedIn){
+      const loginRequestData = wixClient.auth.generateOAuthData(
+        "http://localhost:3000/callback", // Redirect URI
+        "http://localhost:3000", //Original URI
+      );
+      
+      localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData))
+      const {authUrl} = await wixClient.auth.getAuthUrl(loginRequestData)
+      window.location.href = authUrl;
+    }
   }
+
+  const handleLogout = async() => {
+    Cookie.remove("refreshToken")
+    const { logoutUrl } = await wixClient.auth.logout(window.location.href);
+    window.location.href = logoutUrl;
+  }
+  
+  console.log(isLoggedIn);
 
   return (
     <div className="flex justify-around items-center p-3 shadow-[0_1px_3px_-2px_rgb(0,0,0)] fixed w-full z-30 min-h-[3.5rem] top-0 bg-white mb-0">
@@ -63,11 +73,11 @@ const Navbar = () => {
         </li>
       </ul>
       <div className="flex items-center gap-4 md:gap-6">
-        <Search size={24} color="#000" className="big-screen cursor-pointer" />
+        <Search size={24} color="#000" className="big-screen cursor-pointer" onClick={handleLogout} />
         <ShoppingCart size={24} color="#000" className="cursor-pointer"
          onClick={openCart}
         />
-        <User size={24} color="#000" className="big-screen cursor-pointer" onClick={login} />
+        <User size={24} color="#000" className="big-screen cursor-pointer" onClick={handleUser} />
       </div>
     </div>
   )
