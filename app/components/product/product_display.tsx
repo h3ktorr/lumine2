@@ -1,14 +1,9 @@
 'use client'
-
-// import GreyAmani1 from '@/public/holiday_hero.jpg'
-// import GreyAmani2 from '@/public/home_hero.jpg'
-// import GreyAmani3 from '@/public/mens_footwearhero.jpg'
-// import GreyAmani4 from '@/public/mens_hero.jpg'
-// import GreyAmani5 from '@/public/mens_newarrival.jpg'
 import { ChevronLeft, ChevronRight } from '@deemlol/next-icons'
 import Image, { StaticImageData } from 'next/image'
 import { products } from '@wix/stores';
 import { useEffect, useState } from 'react'
+import { useWixClient } from '@/app/hooks/useWixClient';
 
 // interface ProductProps{
 //  id: number;
@@ -18,30 +13,47 @@ import { useEffect, useState } from 'react'
 //  category: string;
 // }
 
+interface AddTocartProps{
+  productId: string;
+  varientId: string;
+  stockNumber: number;
+}
 
-const Product_display = ({ product }: { product: products.Product }) => {
-//  let product: ProductProps = 
-//   {
-//     id: 232,
-//     name: "Amani Moto Shearling Bomber",
-//     price: 2680,
-//     image: [GreyAmani1, GreyAmani2, GreyAmani3, GreyAmani4, GreyAmani5],
-//     category: `Women's Outerwear`,
-//   }
- 
+
+const Product_display = ({ product }: { product: products.Product }) => { 
  const [index, setIndex] = useState(0);
  const sizes = ["XXL", "XL", "L", "M", "S", "XS", "XXS"];
  const [selectedSize, setSelectedSize] = useState('');
  const [sizeSelected, setSizeSelected] = useState(false);
 
- const handleSizeChange = (sizeId:number, sizeName:string) => {
-  // chooseSize(sizeId, sizeName);
-  setSelectedSize(sizeName);
-  setSizeSelected(true);
-};
+ const mediaImage = product.media?.items;
 
-const images = product.media?.items?.map(item => item.image?.url || "");
-const mediaImage = product.media?.items
+ const wixClient = useWixClient();
+ 
+ const addTocart = ({
+   productId,
+   varientId,
+   stockNumber
+  }:AddTocartProps) => {
+    const response = wixClient.currentCart.addToCurrentCart({
+      lineItems: [
+        {
+          catalogReference: {
+            appId: process.env.NEXT_PUBLIC_WIX_APP_ID!,
+            catalogItemId: productId,
+            options: {varientId}
+          },
+          quantity: stockNumber
+        }
+      ]
+    })
+  }
+
+  const handleSizeChange = (sizeId:number, sizeName:string) => {
+   // chooseSize(sizeId, sizeName);
+   setSelectedSize(sizeName);
+   setSizeSelected(true);
+  };
 
  const nextSlide = () => {
   setIndex((oldIndex) => {
@@ -63,11 +75,11 @@ const mediaImage = product.media?.items
    });
  };
 
- // useEffect(() => {
- //  setIndex(0);
+ useEffect(() => {
+  setIndex(0);
  //  // setSizeSelected(false);
  //  // setSelectedSize(null);
- // }, [product.image]);
+ }, [mediaImage]);
 
  useEffect(() => {
   let slider = setInterval(() => {
