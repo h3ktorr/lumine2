@@ -6,11 +6,24 @@ import { X } from "@deemlol/next-icons";
 import Cart_items from "./cart/cart_items";
 import Cart_summary from "./cart/cart_summary";
 import Cart_shopmore from "./cart/cart_shopmore";
+import { useCartStore } from '@/app/hooks/useCartStore'
+import { useWixClient } from "../hooks/useWixClient";
 
 const Cart = () => {
  const { isCartOpen, closeCart} = useContext(ShopContext)!;
 
  const cartRef = useRef<HTMLDivElement>(null);
+
+ const wixClient = useWixClient()
+
+ const { cart, getCart} = useCartStore();
+
+ useEffect(()=>{
+  getCart(wixClient);
+ }, [wixClient, getCart])
+
+ console.log(cart);
+ 
 
  const handleCartClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
    if (e.target === cartRef.current) {

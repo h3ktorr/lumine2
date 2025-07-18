@@ -1,6 +1,6 @@
 'use client'
 import { ChevronLeft, ChevronRight } from '@deemlol/next-icons'
-import Image, { StaticImageData } from 'next/image'
+import Image from 'next/image'
 import { products } from '@wix/stores';
 import { useEffect, useState } from 'react'
 import { useWixClient } from '@/app/hooks/useWixClient';
@@ -29,13 +29,15 @@ const Product_display = ({ product }: { product: products.Product }) => {
  const mediaImage = product.media?.items;
 
  const wixClient = useWixClient();
+
+ const variant = "00000000-0000-0000-0000-000000000000"
  
- const addTocart = ({
+ const addTocart = async({
    productId,
    varientId,
    stockNumber
   }:AddTocartProps) => {
-    const response = wixClient.currentCart.addToCurrentCart({
+    const response = await wixClient.currentCart.addToCurrentCart({
       lineItems: [
         {
           catalogReference: {
@@ -47,7 +49,11 @@ const Product_display = ({ product }: { product: products.Product }) => {
         }
       ]
     })
+    console.log(response);
   }
+
+  console.log(product.stock?.quantity, process.env.NEXT_PUBLIC_WIX_APP_ID);
+  
 
   const handleSizeChange = (sizeId:number, sizeName:string) => {
    // chooseSize(sizeId, sizeName);
@@ -158,7 +164,7 @@ const Product_display = ({ product }: { product: products.Product }) => {
           </div>
         ))}
        </div>
-       <button className={sizeSelected ? "bg-black text-white rounded-[10px] text-base sm:text-xl p-2 font-Itim mt-4 w-full transition-all duration-500 hover:cursor-pointer hover:bg-[#9c7474]" :"bg-[#696565] text-white rounded-[10px] text-base sm:text-xl p-2 font-Itim mt-4 w-full transition-all duration-500"}>
+       <button onClick={()=>addTocart({productId: product._id!, varientId: variant, stockNumber: product.stock?.quantity!})} className={sizeSelected ? "bg-black text-white rounded-[10px] text-base sm:text-xl p-2 font-Itim mt-4 w-full transition-all duration-500 hover:cursor-pointer hover:bg-[#9c7474]" :"bg-[#696565] text-white rounded-[10px] text-base sm:text-xl p-2 font-Itim mt-4 w-full transition-all duration-500"}>
        {sizeSelected ? "Add To Cart" : "Select A Size"}
        </button>
       </div>

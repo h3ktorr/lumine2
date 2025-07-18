@@ -16,11 +16,18 @@ type CartState = {
   removeItem: (wixClient: WixClient, itemId: string) => {};
 };
 
-const useStore = create<CartState>((set) => ({
+export const useCartStore = create<CartState>((set) => ({
   cart: [],
   isLoading: true,
   counter: 0,
-  getCart: async (wixClient) => {},
+  getCart: async (wixClient) => {
+    const cart = await wixClient.currentCart.getCurrentCart();
+    set({
+      cart: cart || [],
+      isLoading: false,
+      counter: cart?.lineItems?.length || 0,
+    });
+  },
   addItem: async (wixClient) => {},
   removeItem: async (wixClient) => {},
 }));
