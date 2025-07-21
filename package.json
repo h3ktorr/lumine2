@@ -14,6 +14,7 @@
     "@wix/media": "^1.0.171",
     "@wix/members": "^1.0.302",
     "@wix/sdk": "^1.15.24",
+    "@wix/site-ecom": "^1.11.0",
     "@wix/stores": "^1.0.484",
     "js-cookie": "^3.0.5",
     "next": "15.3.3",

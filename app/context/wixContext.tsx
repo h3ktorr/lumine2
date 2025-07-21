@@ -4,35 +4,38 @@ import { createClient, OAuthStrategy } from "@wix/sdk";
 import { products, collections } from "@wix/stores";
 import { currentCart } from "@wix/ecom";
 import Cookie from "js-cookie";
-import { createContext, ReactNode } from "react";
+import { createContext, useEffect, useState, ReactNode } from "react";
 
+export type WixClient = ReturnType<typeof createClient>;
 
-const refreshToken = JSON.parse(Cookie.get("refreshToken") || "{}");
+export const WixClientContext = createContext<WixClient | null>(null);
 
-const wixClient = createClient({
-  modules: {
-    products,
-    collections,
-    currentCart
-  },
-  auth: OAuthStrategy({
-    clientId: process.env.NEXT_PUBLIC_WIX_CLIENT_ID!,
-    tokens: {
-      refreshToken,
-      accessToken: { value: "", expiresAt: 0 },
-    },
-  }),
-});
+export const WixClientContextProvider = ({ children }: { children: ReactNode }) => {
+  const [wixClient, setWixClient] = useState<WixClient | null>(null);
 
-export type WixClient = typeof wixClient;
+  useEffect(() => {
+    const refreshToken = JSON.parse(Cookie.get("refreshToken") || "{}");
 
-export const WixClientContext = createContext<WixClient>(wixClient);
+    const client = createClient({
+      modules: {
+        products,
+        collections,
+        currentCart,
+      },
+      auth: OAuthStrategy({
+        clientId: process.env.NEXT_PUBLIC_WIX_CLIENT_ID!,
+        tokens: {
+          refreshToken,
+          accessToken: { value: "", expiresAt: 0 },
+        },
+      }),
+    });
 
-export const WixClientContextProvider = ({
-  children,
-}: {
-  children: ReactNode;
-}) => {
+    setWixClient(client);
+  }, []);
+
+  if (!wixClient) return null; // or loading spinner
+
   return (
     <WixClientContext.Provider value={wixClient}>
       {children}
