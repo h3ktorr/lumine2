@@ -1,6 +1,6 @@
 "use client";
 
-import { WixClientContext } from "../context/wixContext";
+import { WixClientContext } from "../provider/clientProvider";
 import { useContext } from "react";
 
 export const useWixClient = () => {

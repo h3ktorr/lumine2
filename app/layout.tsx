@@ -5,7 +5,7 @@ import Footer from "./components/Footer";
 import ShopContextProvider from "./context/ShopContext";
 import Cart from "./components/Cart";
 import Sidebar from "./components/Sidebar";
-import { WixClientContextProvider } from "./context/wixContext";
+import { ClientProvider } from '@/app/provider/clientProvider'
 
 export const metadata: Metadata = {
   title: "Lumine",
@@ -23,13 +23,13 @@ export default function RootLayout({
         <body
         className={`h-full w-full flex flex-col`}
         >
-          <WixClientContextProvider>
+          <ClientProvider>
             <Navbar />
             <Cart />
             <Sidebar />
             {children}
             <Footer />
-          </WixClientContextProvider>
+          </ClientProvider>
         </body>
       </ShopContextProvider>
     </html>

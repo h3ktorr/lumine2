@@ -19,10 +19,11 @@ export default async function page(
  }
 
  const product = products.items[0];
+ const productId = product._id
 
   return (
     <div className="mt-14 w-[90vw] m-auto flex flex-col items-center">
-     <Product_display product={product}/>
+     <Product_display product={product} productId={productId!}/>
      <Product_recommended />
      <Newsletter />
     </div>

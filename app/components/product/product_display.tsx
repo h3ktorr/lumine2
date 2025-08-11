@@ -21,18 +21,26 @@ interface AddTocartProps{
 }
 
 
-const Product_display = ({ product }: { product: products.Product }) => { 
+const Product_display = ({ product, productId }: { product: products.Product, productId: string }) => { 
  const [index, setIndex] = useState(0);
- const sizes = ["XXL", "XL", "L", "M", "S", "XS", "XXS"];
  const [selectedSize, setSelectedSize] = useState('');
  const [sizeSelected, setSizeSelected] = useState(false);
+ const [selectedVarient, setSelectedVarient] = useState<products.Variant>()
+ const [selectedOption, setSelectedOption] = useState("")
 
  const mediaImage = product.media?.items;
 
  const wixClient = useWixClient();
  const { cart, addItem} = useCartStore();
 
- const variant = "00000000-0000-0000-0000-000000000000"
+ useEffect(()=>{
+    setSelectedVarient(selectedOption)
+  }, [selectedOption])
+
+ const handleOptionSelect = (choice:string) => {
+  setSelectedOption(choice)
+ }
+ 
  
   const handleSizeChange = (sizeId:number, sizeName:string) => {
    // chooseSize(sizeId, sizeName);
@@ -125,11 +133,13 @@ const Product_display = ({ product }: { product: products.Product }) => {
       <div className="bg-[#D9D9D9] py-2 px-4 lg:w-2/3 w-full text-[.9rem] sm:text-base">
        <p className="">Select price</p>
        <div className="mt-2">
-       {sizes.map((size, sizeIndex) => (
-        <div
+       {product.productOptions?.map(option=>(
+        option.choices!.map((choice, sizeIndex)=>{
+        let size = choice.value
+        return <div
           key={sizeIndex}
           className='border-[.1rem] mb-2 p-[.15rem] text-xs transition-all duration-300 cursor-pointer hover:bg-white'
-          onClick={() => handleSizeChange(Number(product._id), size)}
+          onClick={() => handleOptionSelect(size!)}
           style={
             selectedSize === size
               ? {
@@ -141,9 +151,9 @@ const Product_display = ({ product }: { product: products.Product }) => {
           >
             {size}
           </div>
-        ))}
+        })))}
        </div>
-       <button onClick={()=>addItem(wixClient, product._id!)} className={sizeSelected ? "bg-black text-white rounded-[10px] text-base sm:text-xl p-2 font-Itim mt-4 w-full transition-all duration-500 hover:cursor-pointer hover:bg-[#9c7474]" :"bg-[#696565] text-white rounded-[10px] text-base sm:text-xl p-2 font-Itim mt-4 w-full transition-all duration-500"}>
+       <button onClick={()=>addItem(wixClient, productId)} className={sizeSelected ? "bg-black text-white rounded-[10px] text-base sm:text-xl p-2 font-Itim mt-4 w-full transition-all duration-500 hover:cursor-pointer hover:bg-[#9c7474]" :"bg-[#696565] text-white rounded-[10px] text-base sm:text-xl p-2 font-Itim mt-4 w-full transition-all duration-500"}>
        {sizeSelected ? "Add To Cart" : "Select A Size"}
        </button>
       </div>
