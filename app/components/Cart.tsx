@@ -53,7 +53,7 @@ const Cart = () => {
        <X size={24} color="#000" className="cursor-pointer" onClick={closeCart}/>
       </div>
       <Cart_items /> 
-      <Cart_summary />
+      <Cart_summary cart={cart} />
       <Cart_shopmore />
      </div>
     </div>

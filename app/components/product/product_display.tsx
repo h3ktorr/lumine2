@@ -23,7 +23,6 @@ interface AddTocartProps{
 
 const Product_display = ({ product, productId }: { product: products.Product, productId: string }) => { 
  const [index, setIndex] = useState(0);
- const [selectedSize, setSelectedSize] = useState('');
  const [sizeSelected, setSizeSelected] = useState(false);
  const [selectedVarient, setSelectedVarient] = useState<products.Variant>()
  const [selectedOption, setSelectedOption] = useState("")
@@ -33,20 +32,21 @@ const Product_display = ({ product, productId }: { product: products.Product, pr
  const wixClient = useWixClient();
  const { cart, addItem} = useCartStore();
 
- useEffect(()=>{
-    setSelectedVarient(selectedOption)
-  }, [selectedOption])
-
  const handleOptionSelect = (choice:string) => {
-  setSelectedOption(choice)
+  setSelectedOption(choice);
+  setSizeSelected(true);
  }
  
- 
-  const handleSizeChange = (sizeId:number, sizeName:string) => {
-   // chooseSize(sizeId, sizeName);
-   setSelectedSize(sizeName);
-   setSizeSelected(true);
-  };
+  useEffect(() => {
+    if (!selectedOption) return;
+
+    const variant = product.variants?.find(v => {
+      if (!v.choices) return false;
+      return v.choices["Size"] === selectedOption;
+    });
+
+    setSelectedVarient(variant);
+  }, [selectedOption, product.variants]);
 
  const nextSlide = () => {
   setIndex((oldIndex) => {
@@ -141,7 +141,7 @@ const Product_display = ({ product, productId }: { product: products.Product, pr
           className='border-[.1rem] mb-2 p-[.15rem] text-xs transition-all duration-300 cursor-pointer hover:bg-white'
           onClick={() => handleOptionSelect(size!)}
           style={
-            selectedSize === size
+            selectedOption === size
               ? {
                  color: "white",
                  backgroundColor: "black",
@@ -153,7 +153,7 @@ const Product_display = ({ product, productId }: { product: products.Product, pr
           </div>
         })))}
        </div>
-       <button onClick={()=>addItem(wixClient, productId)} className={sizeSelected ? "bg-black text-white rounded-[10px] text-base sm:text-xl p-2 font-Itim mt-4 w-full transition-all duration-500 hover:cursor-pointer hover:bg-[#9c7474]" :"bg-[#696565] text-white rounded-[10px] text-base sm:text-xl p-2 font-Itim mt-4 w-full transition-all duration-500"}>
+       <button onClick={()=>addItem(wixClient, productId, selectedVarient?._id!)} className={sizeSelected ? "bg-black text-white rounded-[10px] text-base sm:text-xl p-2 font-Itim mt-4 w-full transition-all duration-500 hover:cursor-pointer hover:bg-[#9c7474]" :"bg-[#696565] text-white rounded-[10px] text-base sm:text-xl p-2 font-Itim mt-4 w-full transition-all duration-500"}>
        {sizeSelected ? "Add To Cart" : "Select A Size"}
        </button>
       </div>

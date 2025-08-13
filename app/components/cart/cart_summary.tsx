@@ -1,4 +1,6 @@
-const Cart_summary = () => {
+import { currentCart } from "@wix/ecom";
+
+const Cart_summary = ({cart}: {cart:currentCart.Cart}) => {
   return (
     <div className="mt-8 font-Jomolhari w-full text-[.8rem] sm:text-base">
      <p className="text-base sm:text-xl">Order Summary</p>

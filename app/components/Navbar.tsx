@@ -7,6 +7,7 @@ import Link from "next/link";
 import Cookie from 'js-cookie';
 import { ShopContext } from "../context/ShopContext";
 import { useWixClient } from "../hooks/useWixClient";
+import { useCartStore } from "../hooks/useCartStore";
 
 const Navbar = () => {
   const [menu, setMenu] = useState("shop");
@@ -14,6 +15,8 @@ const Navbar = () => {
 
   const wixClient = useWixClient()
   const isLoggedIn = wixClient.auth.loggedIn()
+
+  const { counter } = useCartStore();
 
   const handleUser = async() => {
     if(!isLoggedIn){
@@ -74,10 +77,11 @@ const Navbar = () => {
       </ul>
       <div className="flex items-center gap-4 md:gap-6">
         <Search size={24} color="#000" className="big-screen cursor-pointer" onClick={handleLogout} />
+        <User size={24} color="#000" className="big-screen cursor-pointer" onClick={handleUser} />
         <ShoppingCart size={24} color="#000" className="cursor-pointer"
          onClick={openCart}
         />
-        <User size={24} color="#000" className="big-screen cursor-pointer" onClick={handleUser} />
+        <div className="w-[1.375rem] h-[1.375rem] flex justify-center items-center mt-[-1.5625rem] ml-[-1.75rem]">{counter}</div>
       </div>
     </div>
   )
