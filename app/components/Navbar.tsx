@@ -8,11 +8,13 @@ import Cookie from 'js-cookie';
 import { ShopContext } from "../context/ShopContext";
 import { useWixClient } from "../hooks/useWixClient";
 import { useCartStore } from "../hooks/useCartStore";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [menu, setMenu] = useState("shop");
   const { openCart, openSidebar } = useContext(ShopContext)!;
 
+  const router = useRouter();
   const wixClient = useWixClient()
   const isLoggedIn = wixClient.auth.loggedIn()
 
@@ -29,6 +31,7 @@ const Navbar = () => {
       const {authUrl} = await wixClient.auth.getAuthUrl(loginRequestData)
       window.location.href = authUrl;
     }
+    router.push('/profile')
   }
 
   const handleLogout = async() => {

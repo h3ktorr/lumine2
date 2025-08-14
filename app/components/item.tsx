@@ -4,21 +4,28 @@ import Link from "next/link"
 import { useState } from "react";
 import { ChevronRight, ChevronLeft } from "@deemlol/next-icons";
 import Image, { StaticImageData } from "next/image";
+import { useWixClient } from "../hooks/useWixClient";
+import { products } from "@wix/stores";
+import { useCartStore } from "../hooks/useCartStore";
 
 interface Props{
- id: number;
+ id: string;
  image: string[]; 
  price: number; 
  name: string;
  slug: string;
+ product: products.Product
 }
 
 const Item = (props: Props) => {
- const { id, image, price, name, slug } = props;
+ const { id, image, price, name, slug, product } = props;
  const [index, setIndex] = useState(0);
  const [isHovered, setIsHovered] = useState(false);
  const sizes = ["XXL", "XL", "L", "M", "S", "XS", "XXS"];
  const [selectedSize, setSelectedSize] = useState("");
+
+ const wixClient = useWixClient();
+ const { addItem} = useCartStore();
 
  const handleMouseEnter = () => {
   setIsHovered(true);
@@ -28,9 +35,17 @@ const Item = (props: Props) => {
    setIsHovered(false);
  };
 
- const handleSizeChange = (sizeId:number, sizeName:string) => {
-  setSelectedSize(sizeName);
-};
+ const handleSizeChange = (sizeName: string) => {
+    setSelectedSize(sizeName)
+    const variant = product.variants?.find(v => v.choices?.["Size"] === sizeName);
+
+    if (!variant) {
+      console.log("Variant not found for size", sizeName);
+      return;
+    }
+
+    addItem(wixClient, product._id!, variant._id!);
+  };
 
 const handleNextImage = () => {
   setIndex((prev) => (prev + 1) % image.length); 
@@ -64,7 +79,7 @@ const handlePrevImage = () => {
           <div 
             className="w-9 text-center border-black border-[.1rem] cursor-pointer hover:bg-white"
             key={sizeIndex}
-            onClick={() => handleSizeChange(id, size)}
+            onClick={() => handleSizeChange(size)}
             style={
               selectedSize === size
                 ? {

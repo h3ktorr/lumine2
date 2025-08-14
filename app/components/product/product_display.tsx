@@ -30,7 +30,7 @@ const Product_display = ({ product, productId }: { product: products.Product, pr
  const mediaImage = product.media?.items;
 
  const wixClient = useWixClient();
- const { cart, addItem} = useCartStore();
+ const { addItem} = useCartStore();
 
  const handleOptionSelect = (choice:string) => {
   setSelectedOption(choice);

@@ -23,7 +23,8 @@ const Mens_top = async() => {
         return (
           <Suspense fallback={'loading'} key={product._id}>
             <Item
-              id={Number(product._id)}
+              product={product}
+              id={product._id!}
               name={product.name || ""}
               image={images!}
               price={product.priceData?.price || 0}
