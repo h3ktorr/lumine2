@@ -1,26 +1,22 @@
 import UpdateButton from "../components/updateButton";
 import { updateUser } from "../lib/actions";
 import { wixClientServer } from "../lib/wixClientServer";
-import { members } from "@wix/members";
-
 
 const ProfilePage = async() => {
  const wixClient = await wixClientServer();
 
-  const user = await wixClient.members.getCurrentMember({
-    fieldsets: [members.Set.FULL],
-  });
+  const user = await wixClient.members.getCurrentMember();
 
   if (!user.member?.contactId) {
-    return <div className="">Not logged in!</div>;
+    return <div className="mt-14 w-[90vw] m-auto flex flex-col items-center">Not logged in!</div>;
   }
 
   return (
-    <div className="flex flex-col md:flex-row gap-24 md:h-[calc(100vh-180px)] items-center px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
-     <div className="w-full md:w-1/2">
+    <div className="mt-14 w-[90vw] m-auto flex flex-col items-center">
+     <div className="w-full">
         <h1 className="text-2xl">Profile</h1>
         <form action={updateUser} className="mt-12 flex flex-col gap-4">
-          <input type="text" hidden name="id" value={user.member.contactId} />
+          <input type="text" hidden name="id" value={user.member.contactId} readOnly />
           <label className="text-sm text-gray-700">Username</label>
           <input
             type="text"

@@ -42,11 +42,11 @@ const CallbackPage = () => {
         localStorage.removeItem('oAuthRedirectData');
 
         // Redirect to original page (or home)
-        router.push(oAuthData.originalUri || '/');
+        window.location.replace("/")
       } catch (error) {
         console.error('OAuth callback failed:', error);
         alert('Login failed. Please try again.');
-        router.replace('/login'); // fallback
+        router.push('/'); // fallback
       }
     };
 

@@ -1,8 +1,8 @@
 'use client'
 
 import Image from "next/image"
-import { AlignJustify, ShoppingCart, Search, User } from "@deemlol/next-icons";
-import { useContext, useState } from "react";
+import { AlignJustify, ShoppingCart, Search, User, LogIn, LogOut } from "@deemlol/next-icons";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import Cookie from 'js-cookie';
 import { ShopContext } from "../context/ShopContext";
@@ -13,14 +13,14 @@ import { useRouter } from "next/navigation";
 const Navbar = () => {
   const [menu, setMenu] = useState("shop");
   const { openCart, openSidebar } = useContext(ShopContext)!;
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const router = useRouter();
-  const wixClient = useWixClient()
-  const isLoggedIn = wixClient.auth.loggedIn()
+  const wixClient = useWixClient();
 
   const { counter } = useCartStore();
 
-  const handleUser = async() => {
+  const handleLogin = async() => {
     if(!isLoggedIn){
       const loginRequestData = wixClient.auth.generateOAuthData(
         "http://localhost:3000/callback", // Redirect URI
@@ -31,7 +31,6 @@ const Navbar = () => {
       const {authUrl} = await wixClient.auth.getAuthUrl(loginRequestData)
       window.location.href = authUrl;
     }
-    router.push('/profile')
   }
 
   const handleLogout = async() => {
@@ -39,6 +38,10 @@ const Navbar = () => {
     const { logoutUrl } = await wixClient.auth.logout(window.location.href);
     window.location.href = logoutUrl;
   }
+
+  useEffect(() => {
+    setIsLoggedIn(wixClient.auth.loggedIn());
+  }, [wixClient]);
   
   console.log(isLoggedIn);
 
@@ -80,7 +83,7 @@ const Navbar = () => {
       </ul>
       <div className="flex items-center gap-4 md:gap-6">
         <Search size={24} color="#000" className="big-screen cursor-pointer" onClick={handleLogout} />
-        <User size={24} color="#000" className="big-screen cursor-pointer" onClick={handleUser} />
+        {isLoggedIn ? <LogOut size={24} color="#000" className="big-screen cursor-pointer" onClick={handleLogout} /> : <LogIn size={24} color="#000" className="big-screen cursor-pointer" onClick={handleLogin} />}
         <ShoppingCart size={24} color="#000" className="cursor-pointer"
          onClick={openCart}
         />
