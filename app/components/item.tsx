@@ -1,12 +1,13 @@
 'use client'
 
 import Link from "next/link"
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ChevronRight, ChevronLeft } from "@deemlol/next-icons";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import { useWixClient } from "../hooks/useWixClient";
 import { products } from "@wix/stores";
 import { useCartStore } from "../hooks/useCartStore";
+import { ShopContext } from "../context/ShopContext";
 
 interface Props{
  id: string;
@@ -18,11 +19,13 @@ interface Props{
 }
 
 const Item = (props: Props) => {
- const { id, image, price, name, slug, product } = props;
+ const { image, price, name, slug, product } = props;
  const [index, setIndex] = useState(0);
  const [isHovered, setIsHovered] = useState(false);
  const sizes = ["XXL", "XL", "L", "M", "S", "XS", "XXS"];
  const [selectedSize, setSelectedSize] = useState("");
+ const { openCart } = useContext(ShopContext)!;
+
 
  const wixClient = useWixClient();
  const { addItem} = useCartStore();
@@ -45,6 +48,7 @@ const Item = (props: Props) => {
     }
 
     addItem(wixClient, product._id!, variant._id!);
+    openCart()
   };
 
 const handleNextImage = () => {

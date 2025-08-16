@@ -10,6 +10,11 @@ type CartState = {
   getCart: (wixClient: WixClient) => {};
   addItem: (wixClient: WixClient, productId: string, variantId: string) => {};
   removeItem: (wixClient: WixClient, itemId: string) => {};
+  updateItemQuantity: (
+    wixClient: WixClient,
+    itemId: string,
+    quantity: number
+  ) => {};
 };
 
 export const useCartStore = create<CartState>((set) => ({
@@ -66,6 +71,22 @@ export const useCartStore = create<CartState>((set) => ({
       await ecom.refreshCart();
     } catch (error) {
       console.log(error);
+    }
+  },
+  updateItemQuantity: async (wixClient, lineItemId, quantity) => {
+    set({ isLoading: true });
+    try {
+      const updatedCart =
+        await wixClient.currentCart.updateCurrentCartLineItemQuantity([
+          {
+            _id: lineItemId,
+            quantity,
+          },
+        ]);
+      set({ cart: updatedCart.cart, isLoading: false });
+    } catch (err) {
+      console.error("Error updating item quantity:", err);
+      set({ isLoading: false });
     }
   },
 }));
