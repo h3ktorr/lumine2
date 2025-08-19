@@ -2,6 +2,7 @@ import { wixClientServer } from '@/app/lib/wixClientServer';
 import Item from '../item'
 import { products } from '@wix/stores';
 import { Suspense } from 'react';
+import Link from 'next/link';
 
 const Mens_outerwear = async() => {
   const categoryId = process.env.MENS_OUTERWEAR_CATEGORY_ID!
@@ -34,6 +35,9 @@ const Mens_outerwear = async() => {
         )
       })}
      </div>
+     <button className='bg-[#E8E8E6] p-2 w-20 sm:w-28 h-6 sm:h-8 rounded-[10px] self-end font-Itim text-[.8rem] sm:text-base text-black flex justify-center items-center'>
+        <Link href='/men/outerwear' >View more</Link>
+     </button>
     </div>
   )
 }

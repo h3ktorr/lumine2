@@ -1,7 +1,9 @@
 'use client'
 
-import React, { createContext, ReactNode, useState } from "react";
-import sidebar_data from '../components/sidebarData'
+import React, { createContext, ReactNode, useEffect, useState } from "react";
+import sidebar_data from '../components/sidebarData';
+import { useWixClient } from "../hooks/useWixClient";
+import Cookie from 'js-cookie';
 
 export type SidebarLink = {
   link_name: string;
@@ -20,11 +22,14 @@ type ShopContextType = {
  isCartOpen: boolean;
  isSidebarOpen: boolean;
  isAllCollectionsOpen: boolean;
+ isLoggedIn: boolean;
  openCart: () => void;
  closeCart: () => void;
  openSidebar: () => void;
  closeSidebar: () => void;
  openAllCollections: () => void;
+ handleLogin: () => Promise<void>;
+ handleLogout: () => Promise<void>;
  closeAllCollections: () => void;
  sidebarLinks: SidebarItem[];
  handleCategory: (id: number) => void;
@@ -40,6 +45,32 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = ({ children }) =
  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
  const [sidebarLinks, setSidebarLinks] = useState(sidebar_data);
  const [isAllCollectionsOpen, setIsAllCollectionsOpen] = useState(false)
+ const [isLoggedIn, setIsLoggedIn] = useState(false);
+ 
+ const wixClient = useWixClient();
+
+ const handleLogin = async() => {
+    if(!isLoggedIn){
+      const loginRequestData = wixClient.auth.generateOAuthData(
+        "http://localhost:3000/callback", // Redirect URI
+        "http://localhost:3000", //Original URI
+      );
+      
+      localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData))
+      const {authUrl} = await wixClient.auth.getAuthUrl(loginRequestData)
+      window.location.href = authUrl;
+    }
+  }
+
+  const handleLogout = async() => {
+    Cookie.remove("refreshToken")
+    const { logoutUrl } = await wixClient.auth.logout(window.location.href);
+    window.location.href = logoutUrl;
+  }
+
+  useEffect(() => {
+      setIsLoggedIn(wixClient.auth.loggedIn());
+  }, [wixClient]);
 
  const openCart = () => {
   setIsCartOpen(true);
@@ -85,6 +116,9 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = ({ children }) =
   isAllCollectionsOpen,
   openAllCollections,
   closeAllCollections,
+  isLoggedIn,
+  handleLogin,
+  handleLogout,
  }
 
  return (

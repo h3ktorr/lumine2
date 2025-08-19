@@ -2,13 +2,13 @@
 
 import { useContext, useEffect, useRef } from "react";
 import { ShopContext } from "../context/ShopContext";
-import { X } from "@deemlol/next-icons";
+import { X, LogIn, LogOut  } from "@deemlol/next-icons";
 import Image from "next/image";
 import Sidebar_search from "./sidebar/sidebar_search";
 import Sidebar_links from "./sidebar/sidebar_links";
 
 const Sidebar = () => {
- const { isSidebarOpen, closeSidebar } = useContext(ShopContext)!;
+ const { isSidebarOpen, closeSidebar, isLoggedIn, handleLogin, handleLogout } = useContext(ShopContext)!;
 
  const sidebarRef = useRef<HTMLDivElement>(null);
 
@@ -36,7 +36,7 @@ const Sidebar = () => {
      className={isSidebarOpen ? "fixed z-50 top-0 left-0 bg-transparent w-full translate-x-0 duration-500 ease-in-out h-full" : "fixed z-50 top-0 left-0 bg-transparent w-full -translate-x-full duration-500 ease-in-out h-full"}
     >
      <div className="w-[80%] pr-4 pl-4 bg-white h-full">
-      <div className="flex justify-between mr-[30%] py-4 px-0">
+      <div className="w-full flex justify-between mr-[30%] py-4 px-0">
        <X 
         size={24} 
         color="#000" className="cursor-pointer" 
@@ -50,6 +50,7 @@ const Sidebar = () => {
           height={20}
         />
        </div>
+       {isLoggedIn ? <LogOut size={24} color="#000" className="cursor-pointer" onClick={handleLogout} /> : <LogIn size={24} color="#000" className="cursor-pointer" onClick={handleLogin} />}
       </div>
       <Sidebar_search />
       <Sidebar_links />

@@ -15,7 +15,7 @@ const Mens_accessories = async() => {
   .find();
 
   return (
-    <div className="w-full overflow-hidden mt-14 flex flex-col bg-amber-500 pb-2">
+    <div className="w-full overflow-hidden mt-14 flex flex-col">
      <h1 className="font-Irish text-xl md:text-2xl cursor-pointer">Mens Accessories</h1>
      <div className="grid w-full grid-cols-2 md:grid-cols-3 mt-4 gap-4">
      {res.items.map((product:products.Product)=>{
@@ -35,8 +35,8 @@ const Mens_accessories = async() => {
         )
       })}
      </div>
-     <button>
-        <Link href='/men/accessories' className='bg-[#E8E8E6] p-2 w-20 sm:w-28 h-6 sm:h-8 rounded-[10px] self-start font-Itim text-[.8rem] sm:text-base text-black'>View more</Link>
+     <button className='bg-[#E8E8E6] p-2 w-20 sm:w-28 h-6 sm:h-8 rounded-[10px] self-end font-Itim text-[.8rem] sm:text-base text-black flex justify-center items-center'>
+        <Link href='/men/accessories' >View more</Link>
      </button>
     </div>
   )
