@@ -23,8 +23,6 @@ const Cart = () => {
   getCart(wixClient);
  }, [wixClient, getCart])
 
- console.log(cart);
-
  const handleCartClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
    if (e.target === cartRef.current) {
      closeCart();

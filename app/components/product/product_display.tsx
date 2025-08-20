@@ -6,21 +6,6 @@ import { useEffect, useState } from 'react'
 import { useWixClient } from '@/app/hooks/useWixClient';
 import { useCartStore } from '@/app/hooks/useCartStore';
 
-// interface ProductProps{
-//  id: number;
-//  name: string;
-//  price: number;
-//  image: StaticImageData[]
-//  category: string;
-// }
-
-interface AddTocartProps{
-  productId: string;
-  varientId: string;
-  stockNumber: number;
-}
-
-
 const Product_display = ({ product, productId }: { product: products.Product, productId: string }) => { 
  const [index, setIndex] = useState(0);
  const [sizeSelected, setSizeSelected] = useState(false);

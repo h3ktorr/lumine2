@@ -4,6 +4,7 @@ import React, { createContext, ReactNode, useEffect, useState } from "react";
 import sidebar_data from '../components/sidebarData';
 import { useWixClient } from "../hooks/useWixClient";
 import Cookie from 'js-cookie';
+import { products } from '@wix/stores';
 
 export type SidebarLink = {
   link_name: string;
@@ -32,6 +33,7 @@ type ShopContextType = {
  handleLogout: () => Promise<void>;
  closeAllCollections: () => void;
  sidebarLinks: SidebarItem[];
+ allProducts: products.Product[];
  handleCategory: (id: number) => void;
 };
 
@@ -46,8 +48,29 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = ({ children }) =
  const [sidebarLinks, setSidebarLinks] = useState(sidebar_data);
  const [isAllCollectionsOpen, setIsAllCollectionsOpen] = useState(false)
  const [isLoggedIn, setIsLoggedIn] = useState(false);
+ const [allProducts, setAllProducts] = useState<products.Product[]>([]);
  
  const wixClient = useWixClient();
+
+ const getAllProducts = async () => {
+  try {
+    let res = await wixClient.products.queryProducts().limit(100).find();
+    let productList: products.Product[] = res.items;
+
+    while (res.hasNext()) {
+      res = await res.next();
+      productList = [...productList, ...res.items];
+    }
+
+    setAllProducts(productList);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+  }
+ };
+
+ useEffect(()=>{
+  getAllProducts()
+ }, [])
 
  const handleLogin = async() => {
     if(!isLoggedIn){
@@ -69,7 +92,7 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = ({ children }) =
   }
 
   useEffect(() => {
-      setIsLoggedIn(wixClient.auth.loggedIn());
+    setIsLoggedIn(wixClient.auth.loggedIn());
   }, [wixClient]);
 
  const openCart = () => {
@@ -119,6 +142,7 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = ({ children }) =
   isLoggedIn,
   handleLogin,
   handleLogout,
+  allProducts
  }
 
  return (
