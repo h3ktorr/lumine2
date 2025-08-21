@@ -5,10 +5,8 @@ import { ShopContext } from "../context/ShopContext";
 import { X } from "@deemlol/next-icons";
 import Cart_items from "./cart/cart_items";
 import Cart_summary from "./cart/cart_summary";
-import Cart_shopmore from "./cart/cart_shopmore";
 import { useCartStore } from '@/app/hooks/useCartStore'
 import { useWixClient } from "../hooks/useWixClient";
-import Cart_button from "./cart/cart_button";
 
 const Cart = () => {
  const { isCartOpen, closeCart} = useContext(ShopContext)!;

@@ -4,10 +4,14 @@ import Product_recommended from "@/app/components/product/product_recommended";
 import { wixClientServer } from "@/app/lib/wixClientServer";
 import { notFound } from "next/navigation";
 
+type PageProps = {
+  params: Promise<{ slug: string }>;
+};
+
 export default async function page(
- context: { params: { slug: string } }
-) {
- const { slug } = await context.params;
+{ params }: PageProps) {
+  const { slug } = await params;
+
  const wixClient = await wixClientServer();
  const products = await wixClient.products
  .queryProducts()
