@@ -75,8 +75,8 @@ const ShopContextProvider: React.FC<ShopContextProviderProps> = ({ children }) =
  const handleLogin = async() => {
     if(!isLoggedIn){
       const loginRequestData = wixClient.auth.generateOAuthData(
-        "http://localhost:3000/callback", // Redirect URI
-        "http://localhost:3000", //Original URI
+        "http://lumine2-l68m.vercel.app/callback", // Redirect URI
+        "http://lumine2-l68m.vercel.app", //Original URI
       );
       
       localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData))
