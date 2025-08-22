@@ -47,13 +47,12 @@ const CartItem: React.FC<CartItemProps>  = ({ item, isLoading }) => {
   return (
     <div className="flex border-b-2 border-black py-1" key={item._id}>
       {/* Image */}
-      <div>
+      <div className="relative min-w-20 h-20 sm:w-24 sm:h-24">
         {item.image && (
           <Image
             src={wixMedia.getScaledToFillImageUrl(item.image, 96, 96, {})}
             alt=""
-            width={96}
-            height={96}
+            fill
             style={{ objectFit: "cover" }}
           />
         )}
@@ -61,7 +60,18 @@ const CartItem: React.FC<CartItemProps>  = ({ item, isLoading }) => {
 
       {/* Product Info */}
       <div className="ml-4 flex flex-col py-2 px-0 font-Jomolhari text-[.8rem] sm:text-base mr-2">
-        <p className="text-[.9rem] sm:text-base">{item.productName?.original}</p>
+        <p className="text-[.8rem] sm:hidden">
+          {/* Show only first 3 words on small screens */}
+          {item.productName?.original
+            ?.split(" ")
+            .slice(0, 3)
+            .join(" ")}
+        </p>
+
+        <p className="hidden sm:block text-[.8rem] sm:text-base">
+          {/* Show full name on screens ≥ sm */}
+          {item.productName?.original}
+        </p>
         <p>{variantSize ?? "Loading..."}</p>
 
         {/* Quantity Controls */}

@@ -7,23 +7,23 @@ const sidebar_data = [
     links: [
       {
         link_name: "Tops",
-        link_address: "./mens/top",
+        link_address: "./men/top",
       },
       {
         link_name: "Bottoms",
-        link_address: "./mens/bottom",
+        link_address: "./men/bottom",
       },
       {
         link_name: "Outerwears",
-        link_address: "./mens/outerwear",
+        link_address: "./men/outerwear",
       },
       {
         link_name: "Footwears",
-        link_address: "./mens/footwear",
+        link_address: "./men/footwear",
       },
       {
         link_name: "Accessories",
-        link_address: "./mens/accessories",
+        link_address: "./men/accessories",
       },
     ],
   },
@@ -35,27 +35,27 @@ const sidebar_data = [
     links: [
       {
         link_name: "Tops",
-        link_address: "./womens/top",
+        link_address: "./women/top",
       },
       {
         link_name: "Bottoms",
-        link_address: "./womens/bottom",
+        link_address: "./women/bottom",
       },
       {
         link_name: "Dress",
-        link_address: "./womens/dress",
+        link_address: "./women/dress",
       },
       {
         link_name: "Outerwears",
-        link_address: "./womens/outerwear",
+        link_address: "./women/outerwear",
       },
       {
         link_name: "Footwears",
-        link_address: "./womens/footwear",
+        link_address: "./women/footwear",
       },
       {
         link_name: "Accessories",
-        link_address: "./womens/accessories",
+        link_address: "./women/accessories",
       },
     ],
   },

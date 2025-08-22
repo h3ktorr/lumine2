@@ -76,7 +76,7 @@ const Product_display = ({ product, productId }: { product: products.Product, pr
 
   return (
     <div className='flex flex-col xm:flex-row gap-8 font-Jomolhari w-full items-center'>
-     <div className="relative w-full xm:w-[60ch] h-[calc(100vh-56px)]">
+     <div className="relative w-full xm:w-[60ch] min-h-[70vh] sm:h-[calc(100vh-56px)]">
      {mediaImage!.map((imageItem, imageIndex) => {
         const imgUrl = imageItem.image?.url || ""; // string
 
@@ -109,7 +109,7 @@ const Product_display = ({ product, productId }: { product: products.Product, pr
          <ChevronRight size={24} color="#fff" />
         </button>
      </div>
-     <div className="flex-1 flex flex-col gap-2 sm:flex-row sm:gap-4 xm:gap-2 xm:flex-col my-6 mx-0">
+     <div className="flex-1 flex flex-col gap-2 sm:flex-row sm:gap-4 xm:gap-2 xm:flex-col sm:my-6 mx-0">
       <div className="mb-8">
        <p className="mb-1 text-base sm:text-xl">{product.name}</p>
        <p className="mb-1 text-[.9rem] sm:text-base">${product.priceData?.price}</p>
