@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 const Womens_hero = () => {
  return (
    <div className="w-full max-h-[calc(100vh-56px)]">
@@ -6,7 +8,9 @@ const Womens_hero = () => {
       <h2 className="font-Jacques text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
       Browse Our Dress <br /> Collection
       </h2>
-      <button className="bg-black text-white rounded-lg text-[.9rem] md:text-xl p-2 font-Itim w-[30%] h-8 md:h-12 cursor-pointer md:mt-8 flex justify-center items-center mt-2">Shop</button>
+      <Link href='/women/dress' className="bg-black text-white rounded-lg text-[.9rem] md:text-xl p-2 font-Itim w-[30%] h-8 md:h-12 cursor-pointer md:mt-8 flex justify-center items-center mt-2 hover:bg-[#9c7474] transition-all duration-500">
+        Shop
+      </Link>
      </div>
      <div className="ml-auto">
      <img 

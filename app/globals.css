@@ -70,6 +70,22 @@
   background-image: url(./assets/womens_top.jpg);
 }
 
+.hoodie_bg{
+  background-image: url(./assets/hoodies_hero.jpg);
+}
+
+.holiday_sale_bg{
+  background-image: url(./assets/holiday_sale.jpg);
+}
+
+.new_arrivals_bg{
+  background-image: url(./assets/new_arrivals.jpg);
+}
+
+.all_footwears_bg{
+  background-image: url(./assets/all_footwear.jpg);
+}
+
 .activeSlide {
   opacity: 1;
   transform: translateX(0);

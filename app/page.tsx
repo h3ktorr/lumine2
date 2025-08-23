@@ -10,21 +10,6 @@ import Now_in_sale from "./components/home/now_in_sale";
 import Shop_all_collections from "./components/home/shop_all_collections";
 
 const Home = async() => {
-  // const wixClient = useWixClient()
-
-  // useEffect(()=>{
-  //   const getProducts = async () => {
-  //     const res = await wixClient.products.queryProducts().find();
-
-  //     console.log(res);
-  //   }
-  //   getProducts();
-  // }, [wixClient])
-
-  //Server
-  // const wixClient = await wixClientServer();
-  // const res = await wixClient.products.queryProducts().find();
-  // console.log(res);
   
   return (
         <div className="mt-14 w-[90vw] m-auto flex flex-col items-center">

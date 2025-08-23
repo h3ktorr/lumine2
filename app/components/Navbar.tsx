@@ -6,13 +6,14 @@ import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { ShopContext } from "../context/ShopContext";
 import { useCartStore } from "../hooks/useCartStore";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const Navbar = () => {
-  const [menu, setMenu] = useState("shop");
+  const [menu, setMenu] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const { openCart, openSidebar, isLoggedIn, handleLogin, handleLogout, allProducts} = useContext(ShopContext)!;
   const router = useRouter();
+  const pathname = usePathname();
 
   const { counter } = useCartStore();
 
@@ -24,6 +25,13 @@ const Navbar = () => {
     router.push(`/product/${slug}`);
     setSearchValue('');
   }
+
+  useEffect(() => {
+    if (pathname === "/") setMenu("shop");
+    else if (pathname === "/men") setMenu("men");
+    else if (pathname === "/women") setMenu("women");
+    else setMenu(""); // default/fallback
+  }, [pathname]);
 
   return (
     <div className="flex justify-around items-center p-3 shadow-[0_1px_3px_-2px_rgb(0,0,0)] fixed w-full z-30 min-h-[3.5rem] top-0 bg-white mb-0">
