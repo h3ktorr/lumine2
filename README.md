@@ -7,7 +7,6 @@ This project provides a smooth shopping experience with product browsing, authen
 
 User registration, login, logout
 
-Profile management (update username, email, phone, etc.)
 
 🛍️ Product Management
 
@@ -19,15 +18,13 @@ Dynamic product filtering & options
 
 🛒 Shopping Experience
 
-Add to cart & checkout workflow
+Add to cart workflow
 
 Responsive design for mobile & desktop
 
 Smooth navigation with Next.js App Router.
 
 ⚡ Server Actions
-
-Secure updates (e.g., update user profile)
 
 Direct data fetching via wixClientServer()
 
