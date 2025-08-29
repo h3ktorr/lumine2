@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Lumine is a modern, full-stack e-commerce web application built with Next.js 14 (App Router) and Wix Headless SDK.
+This project provides a smooth shopping experience with product browsing, authentication, and order management.
 
-## Getting Started
+✨ Features
 
-First, run the development server:
+🔐 Authentication & Members
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+User registration, login, logout
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Profile management (update username, email, phone, etc.)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+🛍️ Product Management
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Fetch products from Wix headless API
 
-## Learn More
+Product detail pages with images, pricing, and variants
 
-To learn more about Next.js, take a look at the following resources:
+Dynamic product filtering & options
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+🛒 Shopping Experience
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Add to cart & checkout workflow
 
-## Deploy on Vercel
+Responsive design for mobile & desktop
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Smooth navigation with Next.js App Router.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+⚡ Server Actions
+
+Secure updates (e.g., update user profile)
+
+Direct data fetching via wixClientServer()
+
+No API routes needed
+
+🛠️ Tech Stack
+
+Framework: Next.js 14 (App Router)
+
+Backend / API: Wix Headless SDK
+
+UI: React + Tailwind CSS + shadcn/ui
+
+State Management: React hooks & server actions
+
+Auth: Wix Members API (OAuth 2.0 + PKCE flow)
