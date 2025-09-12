@@ -41,6 +41,8 @@ const Cart = () => {
   return (
     <div 
      ref={cartRef}
+     role="dialog"
+     aria-label="shopping cart"
      onClick={handleCartClose}
      className={isCartOpen ? "fixed z-50 top-0 self-end w-full cart_background opacity-100 overflow-auto translate-x-0 transition-all duration-500 ease-in h-full" : "fixed z-50 top-0 self-end w-full cart_background opacity-0 overflow-hidden translate-x-full transition-all duration-500 ease-in h-full"}
     >
