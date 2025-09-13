@@ -2,7 +2,7 @@
 
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import sidebar_data from '../components/sidebarData';
-import { useWixClient } from "../hooks/useWixClient";
+import { useWixClient } from "@/app/hooks/useWixClient";
 import Cookie from 'js-cookie';
 import { products } from '@wix/stores';
 

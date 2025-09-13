@@ -1,0 +1,238 @@
+1. Cart Component
+
+✅ Rendering & Visibility
+
+Renders hidden by default when isCartOpen = false.
+
+Renders visible overlay + panel when isCartOpen = true.
+
+✅ Closing Behavior
+
+Clicking the close X button calls closeCart.
+
+Clicking the overlay (outside of the panel) calls closeCart.
+
+Clicking inside the panel does not close the cart.
+
+✅ Body Scroll Lock
+
+When isCartOpen = true, document.body.style.overflow should be "hidden".
+
+When closed, it should reset to "auto".
+
+✅ Store Integration
+
+Calls getCart(wixClient) on mount (and when wixClient changes).
+
+2. Cart_items
+
+✅ Empty State
+
+Renders "Cart is empty" when cart.lineItems is undefined or empty.
+
+✅ With Items
+
+Renders one CartItem per line item in store.
+
+Passes isLoading correctly to each CartItem.
+
+3. CartItem
+
+✅ Rendering
+
+Displays product image (via wixMedia.getScaledToFillImageUrl).
+
+Displays product name (shortened version on small screen, full name on larger).
+
+Shows variant size once it’s fetched (mock wixClient.products.getProduct).
+
+Shows "Loading..." while variant size is being fetched.
+
+✅ Quantity Controls
+
+Clicking + increases quantity and calls updateItemQuantity with correct args.
+
+Clicking – decreases quantity (but not below 1).
+
+Quantity text updates correctly.
+
+✅ Remove Item
+
+Clicking trash icon calls removeItem(wixClient, item._id).
+
+✅ Price
+
+Displays correct subtotal per item (quantity * price).
+
+4. Cart_summary
+
+✅ Subtotal / Total
+
+Displays Subtotal as cart.subtotal.amount.
+
+Displays Total as the same number.
+
+✅ Checkout Button
+
+Checkout button is shown when subtotal.amount > 0.
+
+Checkout button is hidden when subtotal.amount = 0 or undefined.
+
+✅ Static Info
+
+Always shows "Free Shipping" text.
+
+5. Integration Test (Optional but Good)
+
+Render the full Cart with mocked ShopContext + useCartStore.
+
+Open the cart → add items → assert that Cart_summary updates accordingly.
+
+Mock a checkout flow trigger (clicking checkout button).
+
+👉 In short, you’ll want:
+
+Unit tests for each component (Cart, Cart_items, CartItem, Cart_summary).
+
+Integration test for Cart (ensuring context + store interactions work end-to-end).
+
+
+
+
+
+
+
+
+
+// CartItem.test.tsx
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import CartItem from "../cart/cart_items"; // adjust import path if needed
+import { vi } from "vitest";
+import { useCartStore } from "@/app/hooks/useCartStore";
+import { useWixClient } from "@/app/hooks/useWixClient";
+import type { cart } from "@wix/ecom";
+
+// 🛠 Mock the hooks
+vi.mock("@/app/hooks/useCartStore", () => ({
+  useCartStore: vi.fn(),
+}));
+vi.mock("@/app/hooks/useWixClient", () => ({
+  useWixClient: vi.fn(),
+}));
+
+// Mock product variant fetching
+const mockGetProduct = vi.fn();
+
+describe("CartItem", () => {
+  const mockItem: cart.LineItem = {
+    _id: "item123",
+    productName: { original: "Test Product Name" },
+    quantity: 2,
+    price: { amount: "10.00" },
+    catalogReference: {
+      catalogItemId: "prod123",
+      options: { variantId: "var123" },
+    },
+    image: { id: "img123", url: "http://example.com/img.png" },
+  };
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    (useWixClient as vi.Mock).mockReturnValue({
+      products: { getProduct: mockGetProduct },
+    });
+    (useCartStore as vi.Mock).mockReturnValue({
+      removeItem: vi.fn(),
+      updateItemQuantity: vi.fn(),
+    });
+  });
+
+  it("renders product info", () => {
+    render(<CartItem item={mockItem} isLoading={false} />);
+    expect(screen.getByText("Test Product Name")).toBeInTheDocument();
+    expect(screen.getByText("$20")).toBeInTheDocument(); // 2 * 10
+  });
+
+  it("calls updateItemQuantity when plus is clicked", () => {
+    const updateItemQuantity = vi.fn();
+    (useCartStore as vi.Mock).mockReturnValue({
+      removeItem: vi.fn(),
+      updateItemQuantity,
+    });
+
+    render(<CartItem item={mockItem} isLoading={false} />);
+    fireEvent.click(screen.getByRole("img", { hidden: true })); // fallback if icon lacks role
+    const plusButton = screen.getAllByRole("img")[1]; // locate the second icon (+)
+    fireEvent.click(plusButton);
+
+    expect(updateItemQuantity).toHaveBeenCalledWith(
+      expect.any(Object),
+      "item123",
+      3
+    );
+  });
+
+  it("calls updateItemQuantity when minus is clicked (not below 1)", () => {
+    const updateItemQuantity = vi.fn();
+    (useCartStore as vi.Mock).mockReturnValue({
+      removeItem: vi.fn(),
+      updateItemQuantity,
+    });
+
+    render(<CartItem item={mockItem} isLoading={false} />);
+    const minusButton = screen.getAllByRole("img")[0];
+    fireEvent.click(minusButton);
+
+    expect(updateItemQuantity).toHaveBeenCalledWith(
+      expect.any(Object),
+      "item123",
+      1
+    );
+  });
+
+  it("does not update quantity if result < 1", () => {
+    const updateItemQuantity = vi.fn();
+    (useCartStore as vi.Mock).mockReturnValue({
+      removeItem: vi.fn(),
+      updateItemQuantity,
+    });
+
+    render(<CartItem item={{ ...mockItem, quantity: 1 }} isLoading={false} />);
+    const minusButton = screen.getAllByRole("img")[0];
+    fireEvent.click(minusButton);
+
+    expect(updateItemQuantity).not.toHaveBeenCalled();
+  });
+
+  it("calls removeItem when trash icon is clicked", () => {
+    const removeItem = vi.fn();
+    (useCartStore as vi.Mock).mockReturnValue({
+      removeItem,
+      updateItemQuantity: vi.fn(),
+    });
+
+    render(<CartItem item={mockItem} isLoading={false} />);
+    const trashIcon = screen.getAllByRole("img")[2]; // third icon
+    fireEvent.click(trashIcon);
+
+    expect(removeItem).toHaveBeenCalledWith(expect.any(Object), "item123");
+  });
+
+  it("fetches variant size and displays it", async () => {
+    mockGetProduct.mockResolvedValueOnce({
+      product: {
+        variants: [{ _id: "var123", choices: { Size: "XL" } }],
+      },
+    });
+
+    render(<CartItem item={mockItem} isLoading={false} />);
+    await waitFor(() => {
+      expect(screen.getByText("XL")).toBeInTheDocument();
+    });
+  });
+
+  it("shows Loading... while fetching variant", () => {
+    render(<CartItem item={mockItem} isLoading={false} />);
+    expect(screen.getByText("Loading...")).toBeInTheDocument();
+  });
+});

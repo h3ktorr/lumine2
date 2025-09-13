@@ -112,7 +112,7 @@ const Cart_items = () => {
 
   return (
     <div className="mt-8">
-      {!cart.lineItems ? (
+      {!cart.lineItems || cart.lineItems.length === 0 ? (
         <div>Cart is empty</div>
       ) : (
         cart.lineItems.map((item) => (
