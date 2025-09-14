@@ -81,13 +81,17 @@ const CartItem: React.FC<CartItemProps>  = ({ item, isLoading }) => {
             color="#000" 
             className="mr-1.5 cursor-pointer" 
             onClick={() => handleQuantityChange(item.quantity! - 1)} 
+            role="button" 
+            aria-label="decrease quantity"
           />
-          <p className="mr-1.5">{item.quantity}</p>
+          <p className="mr-1.5" role="status" aria-label='quantity'>{item.quantity}</p>
           <Plus 
             size={15} 
             color="#000" 
             className="mr-1.5 cursor-pointer" 
             onClick={() => handleQuantityChange(item.quantity! + 1)}
+            role="button" 
+            aria-label="increase quantity"
           />
         </div>
       </div>
