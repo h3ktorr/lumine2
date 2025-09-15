@@ -51,7 +51,7 @@ const CartItem: React.FC<CartItemProps>  = ({ item, isLoading }) => {
         {item.image && (
           <Image
             src={wixMedia.getScaledToFillImageUrl(item.image, 96, 96, {})}
-            alt=""
+            alt={item.productName?.original || 'Product name'}
             fill
             style={{ objectFit: "cover" }}
           />
@@ -98,10 +98,12 @@ const CartItem: React.FC<CartItemProps>  = ({ item, isLoading }) => {
 
       {/* Price & Remove */}
       <div className="ml-auto flex flex-col justify-between py-2 px-0 font-Jomolhari text-[.8rem] sm:text-base">
-        <p>${item.quantity! * Number(item.price?.amount) }</p>
+        <p aria-label="item price">${item.quantity! * Number(item.price?.amount) }</p>
         <Trash2
           size={20}
           color="#000"
+          role="button" 
+          aria-label="remove item"
           style={{ cursor: isLoading ? "not-allowed" : "pointer" }}
           onClick={() => removeItem(wixClient, item._id!)}
         />

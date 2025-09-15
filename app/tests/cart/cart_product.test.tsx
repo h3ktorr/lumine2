@@ -35,12 +35,13 @@ vi.mock("@/app/hooks/useWixClient", () => ({
 }));
 
 const mockUpdateQuantity = vi.fn();
+const mockRemoveItem = vi.fn()
 
 vi.mock("@/app/hooks/useCartStore", () => ({
   useCartStore: () => ({
     cart: mockCart,
     getCart: vi.fn(),
-    removeItem: vi.fn(),
+    removeItem: mockRemoveItem,
     updateItemQuantity: mockUpdateQuantity,
     isLoading: false,
   }),
@@ -82,6 +83,17 @@ describe("Product Rendering", () => {
     expect(screen.getByText(/test product name long/i)).toHaveClass("sm:block");
     expect(screen.getByText("Test Product Name")).toHaveClass("sm:hidden");
   });
+
+  it('should display product image', () => {
+    render(
+      <ShopContext.Provider value={mockContext}>
+        <Cart />
+      </ShopContext.Provider>
+    );
+
+    const image = screen.getByRole('img')
+    expect(image).toBeInTheDocument();
+  })
 
   it("should show variant size once it’s fetched", async () => {
     mockGetProduct.mockResolvedValueOnce({
@@ -152,3 +164,33 @@ describe("Quantity Controls", () => {
     expect(mockUpdateQuantity).toHaveBeenCalledWith(mockClient, "item123", 1);
   });
 });
+
+describe('Remove Item', () => {
+  it('clicking trash icon should call removeItem(wixClient, item._id)', async() => {
+    render(
+      <ShopContext.Provider value={mockContext}>
+        <Cart />
+      </ShopContext.Provider>
+    );
+
+    const trashButton = screen.getByRole("button", { name: /remove item/i });
+    const user = userEvent.setup();
+    expect(trashButton).toBeInTheDocument();
+    await user.click(trashButton)
+    expect(mockRemoveItem).toHaveBeenCalledWith(mockClient, "item123")
+  })
+})
+
+describe('Price', () => {
+  it('should display the correct subtotal per item (quantity * price)', () => {
+    render(
+      <ShopContext.Provider value={mockContext}>
+        <Cart />
+      </ShopContext.Provider>
+    );
+
+    const itemPrice = screen.getByRole("paragraph", { name: /item price/i });
+    expect(itemPrice).toBeInTheDocument();
+    expect(itemPrice).toHaveTextContent(`${2*10}`)
+  })
+})
