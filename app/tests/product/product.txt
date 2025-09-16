@@ -1,0 +1,125 @@
+1. Page (Server Component)
+
+This is your page({ params }) that fetches product + renders Product_display, Product_recommended, Newsletter.
+
+✅ Tests to Write
+
+Slug fetching
+
+Calls wixClient.products.queryProducts().eq("slug", slug).find().
+
+Not Found
+
+If no product is returned, notFound() is called.
+
+Rendering children
+
+Renders Product_display with correct product and productId.
+
+Renders Product_recommended with correct collectionIds.
+
+Renders Newsletter.
+
+2. Product_display (Client Component)
+✅ Image Carousel
+
+Renders all images from product.media.items.
+
+Starts with first image visible.
+
+Clicking "next" shows next image.
+
+Clicking "prev" shows previous image.
+
+Wraps around correctly (last → first, first → last).
+
+Auto-rotates images every 5 seconds.
+
+✅ Product Info
+
+Renders product name.
+
+Renders product price.
+
+✅ Size Selection
+
+Renders size options (from product.productOptions).
+
+Clicking a size highlights it.
+
+Button label changes from "Select A Size" → "Add To Cart" when size selected.
+
+Clicking multiple sizes updates highlight correctly.
+
+✅ Variant Selection
+
+When size selected, finds correct variant in product.variants.
+
+Stores variant in state (selectedVarient).
+
+✅ Add to Cart
+
+Calls addItem(wixClient, productId, variant._id) when clicking button after size selected.
+
+Button disabled / greyed out when no size selected.
+
+3. Product_recommended (Server Component)
+✅ Fetching
+
+Calls wixClient.products.queryProducts().eq("collectionIds", collectionIds[0]).find().
+
+Randomizes and fetches 3 products (wixClient.products.getProduct(id)).
+
+✅ Rendering
+
+Renders "Recommended for you" header.
+
+Renders up to 3 Item components.
+
+Each item has correct name, price, image, and slug.
+
+4. Newsletter
+
+This one is simpler.
+
+✅ Rendering
+
+Shows correct heading text (sm:block vs sm:hidden responsive).
+
+Renders email input.
+
+Renders "Subscribe" button.
+
+✅ Interaction
+
+Can type into email input.
+
+Clicking "Subscribe" (you can later mock + assert if it triggers API call).
+
+5. Integration Tests
+
+Combine the components to ensure end-to-end flow.
+
+✅ Full Page
+
+Render page with mocked wixClientServer and params.
+
+Assert that:
+
+Product_display is shown with product info.
+
+Product_recommended renders 3 items.
+
+Newsletter renders correctly.
+
+✅ User Flow
+
+User opens product page.
+
+Carousel rotates.
+
+User selects size.
+
+User clicks "Add to Cart".
+
+Assert addItem called with correct args.

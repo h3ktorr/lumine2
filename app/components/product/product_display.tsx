@@ -15,7 +15,7 @@ const Product_display = ({ product, productId }: { product: products.Product, pr
  const mediaImage = product.media?.items;
 
  const wixClient = useWixClient();
- const { addItem} = useCartStore();
+ const { addItem } = useCartStore();
 
  const handleOptionSelect = (choice:string) => {
   setSelectedOption(choice);
@@ -72,7 +72,7 @@ const Product_display = ({ product, productId }: { product: products.Product, pr
   return () => {
     clearInterval(slider);
   };
- }, [index]);
+ }, [index]); 
 
   return (
     <div className='flex flex-col xm:flex-row gap-8 font-Jomolhari w-full items-center'>
@@ -93,7 +93,7 @@ const Product_display = ({ product, productId }: { product: products.Product, pr
 
         return (
           <Image 
-            src={imgUrl} // ✅ This is now a string
+            src={imgUrl} 
             alt=""
             key={imageIndex}
             fill
@@ -102,16 +102,16 @@ const Product_display = ({ product, productId }: { product: products.Product, pr
           />
         );
       })}
-        <button className="absolute z-20 bg-black w-6 h-6 my-0 mx-1 grid place-items-center border-transparent text-base rounded-[5px] cursor-pointer top-[50%] left-0 " onClick={prevSlide}>
+        <button aria-label='prev button' className="absolute z-20 bg-black w-6 h-6 my-0 mx-1 grid place-items-center border-transparent text-base rounded-[5px] cursor-pointer top-[50%] left-0 " onClick={prevSlide}>
          <ChevronLeft size={24} color="#fff" />
         </button>
-        <button className="absolute z-20 bg-black w-6 h-6 my-0 mx-1 grid place-items-center border-transparent text-base rounded-[5px] cursor-pointer top-[50%] right-0" onClick={nextSlide}>
+        <button aria-label='next button' className="absolute z-20 bg-black w-6 h-6 my-0 mx-1 grid place-items-center border-transparent text-base rounded-[5px] cursor-pointer top-[50%] right-0" onClick={nextSlide}>
          <ChevronRight size={24} color="#fff" />
         </button>
      </div>
      <div className="flex-1 flex flex-col gap-2 sm:flex-row sm:gap-4 xm:gap-2 xm:flex-col sm:my-6 mx-0">
       <div className="mb-8">
-       <p className="mb-1 text-base sm:text-xl">{product.name}</p>
+       <p aria-label='product name' className="mb-1 text-base sm:text-xl">{product.name}</p>
        <p className="mb-1 text-[.9rem] sm:text-base">${product.priceData?.price}</p>
        {/* <p className="mb-1 text-[.9rem] sm:text-base">{product.}</p> */}
       </div>
