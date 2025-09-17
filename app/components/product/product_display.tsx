@@ -53,6 +53,8 @@ const Product_display = ({ product, productId }: { product: products.Product, pr
    });
  };
 
+ console.log(product.variants)
+
  useEffect(() => {
   setIndex(0);
  //  // setSizeSelected(false);
@@ -112,11 +114,11 @@ const Product_display = ({ product, productId }: { product: products.Product, pr
      <div className="flex-1 flex flex-col gap-2 sm:flex-row sm:gap-4 xm:gap-2 xm:flex-col sm:my-6 mx-0">
       <div className="mb-8">
        <p aria-label='product name' className="mb-1 text-base sm:text-xl">{product.name}</p>
-       <p className="mb-1 text-[.9rem] sm:text-base">${product.priceData?.price}</p>
+       <p aria-label='product price' className="mb-1 text-[.9rem] sm:text-base">${product.priceData?.price}</p>
        {/* <p className="mb-1 text-[.9rem] sm:text-base">{product.}</p> */}
       </div>
       <div className="bg-[#D9D9D9] py-2 px-4 lg:w-2/3 w-full text-[.9rem] sm:text-base">
-       <p className="">Select price</p>
+       <p className="">Select Size</p>
        <div className="mt-2">
        {product.productOptions?.map(option=>(
         option.choices!.map((choice, sizeIndex)=>{
@@ -138,7 +140,7 @@ const Product_display = ({ product, productId }: { product: products.Product, pr
           </div>
         })))}
        </div>
-       <button onClick={()=>addItem(wixClient, productId, selectedVarient?._id!)} className={sizeSelected ? "bg-black text-white rounded-[10px] text-base sm:text-xl p-2 font-Itim mt-4 w-full transition-all duration-500 hover:cursor-pointer hover:bg-[#9c7474]" :"bg-[#696565] text-white rounded-[10px] text-base sm:text-xl p-2 font-Itim mt-4 w-full transition-all duration-500"}>
+       <button aria-label='add to cart' disabled={!sizeSelected} onClick={()=>addItem(wixClient, productId, selectedVarient?._id!)} className={sizeSelected ? "bg-black text-white rounded-[10px] text-base sm:text-xl p-2 font-Itim mt-4 w-full transition-all duration-500 hover:cursor-pointer hover:bg-[#9c7474]" :"bg-[#696565] text-white rounded-[10px] text-base sm:text-xl p-2 font-Itim mt-4 w-full transition-all duration-500"}>
        {sizeSelected ? "Add To Cart" : "Select A Size"}
        </button>
       </div>
