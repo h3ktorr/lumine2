@@ -91,19 +91,6 @@ describe('Closing Behavior', () => {
     await user.click(cartOverlay)
     expect(mockContext.closeCart).toHaveBeenCalled();
   });
-
-  // it('should not call closeCart when the inside the cart panel is clicked', async() => {
-  //   render(
-  //     <ShopContext.Provider value={mockContext}>
-  //       <Cart />
-  //     </ShopContext.Provider>
-  //   );
-
-  //   const cartPanel = screen.getByRole("region", { name: /cart panel/i });
-  //   const user = userEvent.setup();
-  //   await user.click(cartPanel)
-  //   expect(mockContext.closeCart).not.toHaveBeenCalled();
-  // });
 })
 
 describe('Body Scroll Lock', () => {
@@ -129,7 +116,7 @@ describe('Body Scroll Lock', () => {
 })
 
 describe('Store Integration', () => {
-   beforeEach(() => {
+  beforeEach(() => {
     mockGetCart.mockClear();
   });
 

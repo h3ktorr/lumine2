@@ -1,68 +1,75 @@
-import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import Product_recommended from "@/app/components/product/product_recommended";
-import { wixClientServer } from "@/app/lib/wixClientServer";
 import { products } from "@wix/stores";
+// re-imported the mocks after vi.mock
+import { mockFns } from "@/app/lib/wixClientServer";
 
-vi.mock("@/app/lib/wixClientServer");
+// --- Mock Module ---
+vi.mock("@/app/lib/wixClientServer", () => {
+  const mockProducts: products.Product[] = [
+    { _id: "1", slug: "s1", name: "Product 1", media: { items: [] }, priceData: { price: 10 }, collectionIds: ["c1"] },
+    { _id: "2", slug: "s2", name: "Product 2", media: { items: [] }, priceData: { price: 20 }, collectionIds: ["c1"] },
+    { _id: "3", slug: "s3", name: "Product 3", media: { items: [] }, priceData: { price: 30 }, collectionIds: ["c1"] },
+    { _id: "4", slug: "s4", name: "Product 4", media: { items: [] }, priceData: { price: 30 }, collectionIds: ["c1"] },
+  ];
 
-const mockProducts = [
- { 
-  _id: "12",
-  slug: "test-slug1",
-  name: "Test Product1",
-  media: { items: [] },
-  priceData: { price: 10 },
-  collectionIds: ["c1"],
- },
- { 
-  _id: "23",
-  slug: "test-slug2",
-  name: "Test Product2",
-  media: { items: [] },
-  priceData: { price: 10 },
-  collectionIds: ["c1"],
- },
- { 
-  _id: "34",
-  slug: "test-slug3",
-  name: "Test Product3",
-  media: { items: [] },
-  priceData: { price: 10 },
-  collectionIds: ["c1"],
- },
- { 
-  _id: "45",
-  slug: "test-slug4",
-  name: "Test Product4",
-  media: { items: [] },
-  priceData: { price: 10 },
-  collectionIds: ["c1"],
- },
- { 
-  _id: "56",
-  slug: "test-slug5",
-  name: "Test Product5",
-  media: { items: [] },
-  priceData: { price: 10 },
-  collectionIds: ["c1"],
- },
-]
+  const mockFind = vi.fn().mockResolvedValue({ items: mockProducts });
+  const mockEq = vi.fn(() => ({ find: mockFind }));
+  const mockQueryProducts = vi.fn(() => ({ eq: mockEq }));
+  const mockGetProduct = vi.fn((id) =>
+    Promise.resolve({ product: mockProducts.find((p) => p._id === id) })
+  );
 
-// (wixClientServer as vi.Mock).mockResolvedValue({
-//         products: {
-//           queryProducts: () => ({
-//             eq: () => ({
-//               find: vi.fn().mockResolvedValue({ items: mockProducts }),
-//             }),
-//           }),
-//         },
-//       });
+  return {
+    wixClientServer: vi.fn().mockResolvedValue({
+      products: {
+        queryProducts: mockQueryProducts,
+        getProduct: mockGetProduct,
+      },
+    }),
+    // also export mocks so we can assert in tests
+    __esModule: true,
+    mockFns: { mockQueryProducts, mockEq, mockFind, mockGetProduct },
+  };
+});
 
-describe('Product Fetching', () => {
- it('should call wixClient.products.queryProducts().eq("collectionIds", collectionIds[0]).find()', () => {
-  render(<Product_recommended collectionIds={['c1', 'c2', 'c3']} />)
+beforeEach(() => {
+  vi.clearAllMocks();
+});
 
-  
- })
-})
+// --- Tests ---
+describe("Product_recommended (Server Component)", () => {
+  it("should query products and render recommended items", async () => {
+    const collectionIds = ["c1", "c2"];
+
+    await Product_recommended({ collectionIds });
+
+    // Verify calls
+    expect(mockFns.mockQueryProducts).toHaveBeenCalled();
+    expect(mockFns.mockEq).toHaveBeenCalledWith("collectionIds", "c1");
+    expect(mockFns.mockFind).toHaveBeenCalled();
+    expect(mockFns.mockGetProduct).toHaveBeenCalled();
+
+    
+  });
+
+  it("should randomize and fetch 3 products (wixClient.products.getProduct(id))", async () => {
+    const collectionIds = ["c1"];
+
+    await Product_recommended({ collectionIds });
+
+    // Verify getProduct was called exactly 3 times
+    expect(mockFns.mockGetProduct).toHaveBeenCalledTimes(3);
+
+    // Collect all IDs passed to getProduct
+    const calledIds = mockFns.mockGetProduct.mock.calls.map(([id]) => id);
+
+    const validIds = ["1", "2", "3", "4"];
+    calledIds.forEach((id) => {
+      expect(validIds).toContain(id);
+    });
+
+    // No duplicate picks
+    expect(new Set(calledIds).size).toBe(calledIds.length);
+  });
+});

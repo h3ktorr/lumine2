@@ -1,0 +1,63 @@
+Sidebar
+
+Renders closed by default
+
+Assert sidebar has -translate-x-full class when isSidebarOpen = false.
+
+Renders open when isSidebarOpen = true
+
+Assert sidebar has translate-x-0.
+
+Close button works
+
+Simulate clicking the X icon → closeSidebar should be called.
+
+Login/logout toggle
+
+If isLoggedIn = true, LogOut icon is shown, clicking calls handleLogout.
+
+If isLoggedIn = false, LogIn icon is shown, clicking calls handleLogin.
+
+Click outside closes sidebar
+
+Simulate clicking on the overlay div → closeSidebar should be called.
+
+Body scroll lock
+
+When open → document.body.style.overflow is "hidden".
+
+When closed → "auto".
+
+Sidebar_search
+
+Renders search input
+
+Input is present, default value is "".
+
+Typing filters products
+
+Simulate typing "prod" → expect filtered list items containing "prod".
+
+Clicking a search result navigates
+
+Simulate click → window.location.href should update to /product/{slug}.
+
+Shows max 5 results
+
+Provide 10 matching items → only 5 displayed.
+
+Sidebar_links
+
+Renders category links
+
+Verify all top-level categories render.
+
+Clicking category toggles sub-links
+
+If categoryState = false → clicking Plus calls handleCategory.
+
+If categoryState = true → clicking Minus calls handleCategory and sub-links render.
+
+Sub-links navigate and close sidebar
+
+Clicking a sub-link should call closeSidebar.

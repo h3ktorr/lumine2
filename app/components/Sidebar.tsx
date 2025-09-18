@@ -32,6 +32,8 @@ const Sidebar = () => {
   return (
     <div 
      ref={sidebarRef}
+     role="dialog"
+     aria-label="sidebar"
      onClick={handleSidebarClose}
      className={isSidebarOpen ? "fixed z-50 top-0 left-0 bg-transparent w-full translate-x-0 duration-500 ease-in-out h-full" : "fixed z-50 top-0 left-0 bg-transparent w-full -translate-x-full duration-500 ease-in-out h-full"}
     >
@@ -41,6 +43,8 @@ const Sidebar = () => {
         size={24} 
         color="#000" className="cursor-pointer" 
         onClick={closeSidebar}
+        role="button" 
+        aria-label="close sidebar"
        />
        <div className="">
         <Image 
@@ -50,7 +54,7 @@ const Sidebar = () => {
           height={20}
         />
        </div>
-       {isLoggedIn ? <LogOut size={24} color="#000" className="cursor-pointer" onClick={handleLogout} /> : <LogIn size={24} color="#000" className="cursor-pointer" onClick={handleLogin} />}
+       {isLoggedIn ? <LogOut size={24} color="#000" className="cursor-pointer" onClick={handleLogout} role="button" aria-label="logout" /> : <LogIn size={24} color="#000" className="cursor-pointer" onClick={handleLogin} role="button" aria-label="login"/>}
       </div>
       <Sidebar_search />
       <Sidebar_links />

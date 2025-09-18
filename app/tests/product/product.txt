@@ -78,24 +78,6 @@ Renders up to 3 Item components.
 
 Each item has correct name, price, image, and slug.
 
-4. Newsletter
-
-This one is simpler.
-
-✅ Rendering
-
-Shows correct heading text (sm:block vs sm:hidden responsive).
-
-Renders email input.
-
-Renders "Subscribe" button.
-
-✅ Interaction
-
-Can type into email input.
-
-Clicking "Subscribe" (you can later mock + assert if it triggers API call).
-
 5. Integration Tests
 
 Combine the components to ensure end-to-end flow.
