@@ -29,12 +29,12 @@ const Sidebar_links = () => {
           onClick={() => handleCategory(item.id)}
          >
           {item.categoryState ? 
-          <Minus size={15} color="#000" /> : 
-          <Plus size={15} color="#000" />}
+          <Minus size={15} color="#000" role="button" aria-label="toggle sublinks off" /> : 
+          <Plus size={15} color="#000" role="button" aria-label="toggle sublinks on"/>}
          </div>
         </div>
         {item.categoryState && (
-         <div className="mt-1.5 mb-4 mx-0 font-Itim">
+         <div role="region" aria-label="sidebar sublinks" className="mt-1.5 mb-4 mx-0 font-Itim">
           {item.links.map(data=>(
            <p 
             key={data.link_address}

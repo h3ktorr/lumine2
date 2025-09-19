@@ -1,0 +1,83 @@
+Sidebar toggle
+
+Renders menu icon
+
+Clicking menu icon opens sidebar
+
+Menu highlighting (Shop/Men/Women based on pathname)
+
+Default route ("/")
+
+Assert "Shop" has <hr> under it.
+
+Men route ("/men")
+
+Assert "Men" has <hr> under it.
+
+Women route ("/women")
+
+Mock usePathname → return "/women".
+
+Assert "Women" has <hr> under it.
+
+Logo navigation
+
+Logo renders with link to "/"
+
+Assert logo <img alt="logo" /> exists.
+
+Clicking logo sets menu to "shop"
+
+Simulate click → expect <hr> under "Shop".
+
+Search input with filtering
+
+Renders input with empty default value
+
+Assert input placeholder "Search product" exists and value is "".
+
+Typing filters products
+
+Provide products in context.
+
+Simulate typing "red" → only products containing "red" should appear.
+
+Clicking a search result navigates
+
+Simulate click on "Red Shirt" → router.push("/product/red-shirt") called.
+
+Shows max 5 results
+
+Provide 10 matching products.
+
+Only first 5 should render.
+
+Login/Logout toggle
+
+When isLoggedIn = false
+
+LogIn icon is shown.
+
+Clicking it calls handleLogin.
+
+When isLoggedIn = true
+
+LogOut icon is shown.
+
+Clicking it calls handleLogout.
+
+Cart open and counter display
+
+Cart icon renders
+
+Assert ShoppingCart icon is visible.
+
+Clicking cart icon opens cart
+
+Simulate click → openCart called.
+
+Counter renders correctly
+
+Mock useCartStore().counter = 3.
+
+Assert counter div shows "3".
