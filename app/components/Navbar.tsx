@@ -36,7 +36,7 @@ const Navbar = () => {
   return (
     <div className="flex justify-around items-center p-3 shadow-[0_1px_3px_-2px_rgb(0,0,0)] fixed w-full z-30 min-h-[3.5rem] top-0 bg-white mb-0">
       <div className="small-screen" onClick={openSidebar}>
-        <AlignJustify size={24} color="#000" />
+        <AlignJustify size={24} color="#000" role="button" aria-label="open sidebar"/>
       </div>
       <Link 
         className="cursor-pointer" 
@@ -100,11 +100,19 @@ const Navbar = () => {
             </div>
           )}
         </div>
-        {isLoggedIn ? <LogOut color="#000" className="big-screen w-6 h-6 md:w-[30px] md:h-[30px] cursor-pointer" onClick={handleLogout} /> : <LogIn color="#000" className="big-screen w-6 h-6 md:w-[30px] md:h-[30px] cursor-pointer" onClick={handleLogin} />}
-        <ShoppingCart color="#000" className="w-6 h-6 md:w-[30px] md:h-[30px] cursor-pointer"
+        {isLoggedIn ? 
+        <LogOut color="#000" className="big-screen w-6 h-6 md:w-[30px] md:h-[30px] cursor-pointer" onClick={handleLogout} role="button" aria-label="logout" /> 
+        : 
+        <LogIn color="#000" className="big-screen w-6 h-6 md:w-[30px] md:h-[30px] cursor-pointer" onClick={handleLogin} role="button" aria-label="login"/>
+        }
+        <ShoppingCart 
+         color="#000" 
+         className="w-6 h-6 md:w-[30px] md:h-[30px] cursor-pointer"
          onClick={openCart}
+         role="button" 
+         aria-label="open cart"
         />
-        <div className="w-[1.375rem] h-[1.375rem] flex justify-center items-center mt-[-1.5625rem] ml-[-1.75rem]">{counter}</div>
+        <div role="region" aria-label="cart counter" className="w-[1.375rem] h-[1.375rem] flex justify-center items-center mt-[-1.5625rem] ml-[-1.75rem]">{counter}</div>
       </div>
     </div>
   )
