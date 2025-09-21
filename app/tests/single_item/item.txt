@@ -1,0 +1,46 @@
+🖼️ Image carousel
+
+Default image renders
+Renders the first image (image[0]) on initial render.
+
+Next button cycles forward
+Simulate click on ChevronRight → index increases (wraps around if at last image).
+
+Prev button cycles backward
+Simulate click on ChevronLeft → index decreases (wraps around if at first image).
+
+Hover shows nav buttons
+On mouseEnter, the buttons should move into view (className left-2 / right-2).
+On mouseLeave, they should be hidden (-left-4 / -right-4).
+
+🎯 Size selection
+
+All size options render
+Assert that all sizes (XXL, XL, … XXS) are rendered.
+
+Clicking a size highlights it
+Clicking M applies black background + white text.
+
+Clicking a size calls addItem & openCart
+When a valid variant exists for the chosen size → addItem is called with (wixClient, product._id, variant._id) and openCart is called.
+
+Invalid size does not call addItem
+If no matching variant is found → only console.log, no addItem call.
+
+🖱️ Hover size bar
+
+Hover shows size selector
+On mouseEnter, the size bar slides into view (className top-0).
+
+MouseLeave hides size selector
+On mouseLeave, it slides out (-top-8).
+
+🔗 Navigation
+
+Image is wrapped in a Link
+Clicking the image should navigate to /product/{slug} (verify href).
+
+📜 Static rendering
+
+Displays product name and price
+Asserts name and formatted $price render correctly.

@@ -26,9 +26,8 @@ const Item = (props: Props) => {
  const [selectedSize, setSelectedSize] = useState("");
  const { openCart } = useContext(ShopContext)!;
 
-
  const wixClient = useWixClient();
- const { addItem} = useCartStore();
+ const { addItem } = useCartStore();
 
  const handleMouseEnter = () => {
   setIsHovered(true);
@@ -70,10 +69,10 @@ const handlePrevImage = () => {
       <div className="relative h-full hidden lg:block  w-full">
        <div className="absolute flex h-full top-[10rem]  w-full">
         <div className={isHovered ? "absolute text-xl left-2 transition-all duration-500" : "absolute text-xl -left-4 transition-all duration-500"}>
-        <ChevronLeft size={24} color="#000" onClick={handlePrevImage}/>
+        <ChevronLeft role="button" aria-label='prev image' size={24} color="#000" onClick={handlePrevImage}/>
         </div>
         <div className={isHovered ? "absolute text-xl right-2 transition-all duration-500": "absolute text-xl -right-4 transition-all duration-500"}>
-        <ChevronRight size={24} color="#000" onClick={handleNextImage}/>
+        <ChevronRight role="button" aria-label='next image' size={24} color="#000" onClick={handleNextImage}/>
         </div>
        </div>
        <div 
