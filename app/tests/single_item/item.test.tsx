@@ -5,6 +5,14 @@ import { ShopContext } from "@/app/context/ShopContext";
 import Item from "@/app/components/item";
 import { products } from "@wix/stores";
 
+const mockClient = {
+  id: "mocked-client",
+};
+
+vi.mock("@/app/hooks/useWixClient", () => ({
+  useWixClient: () => mockClient,
+}));
+
 const mockAddToCart = vi.fn();
 
 //Mock useCartStore hook
@@ -70,12 +78,69 @@ const mockProduct:products.Product = {
   },
   priceData: { price: 10 },
   collectionIds: ["c1"],
-  productOptions: []
+  productOptions: [
+    {choices: [
+      { value: "XXL", description: "XXL", inStock: true},
+      { value: "XL", description: "XL", inStock: true},
+      { value: "L", description: "L", inStock: true},
+      { value: "M", description: "M", inStock: true},
+      { value: "S", description: "S", inStock: true },
+      { value: "XS", description: "XS", inStock: true},
+      { value: "XXS", description: "XXS", inStock: true}
+    ],
+    name: "Size",
+    optionType: "drop_down"
+  }],
+  variants: [
+    { 
+      _id: "20",
+      choices: { Size: "XXL" },
+      stock: { trackQuantity: true, quantity: 31, inStock: true },
+      variant: {}
+    },
+    { 
+      _id: "21",
+      choices: { Size: "XL" },
+      stock: { trackQuantity: true, quantity: 31, inStock: true },
+      variant: {}
+    },
+    { 
+      _id: "22",
+      choices: { Size: "L" },
+      stock: { trackQuantity: true, quantity: 31, inStock: true },
+      variant: {}
+    },
+    { 
+      _id: "23",
+      choices: { Size: "M" },
+      stock: { trackQuantity: true, quantity: 31, inStock: true },
+      variant: {}
+    },
+    { 
+      _id: "24",
+      choices: { Size: "S" },
+      stock: { trackQuantity: true, quantity: 31, inStock: true },
+      variant: {}
+    },
+    { 
+      _id: "25",
+      choices: { Size: "XS" },
+      stock: { trackQuantity: true, quantity: 31, inStock: true },
+      variant: {}
+    },
+    { 
+      _id: "26",
+      choices: { Size: "XXS" },
+      stock: { trackQuantity: true, quantity: 31, inStock: true },
+      variant: {}
+    },
+  ]
 }
+
+const images = mockProduct.media?.items?.map(item => item.image?.url || "");
 
 describe('Item Image', () => {
  it('should render default image', () => { 
-  const images = mockProduct.media?.items?.map(item => item.image?.url || "");
   render(
    <ShopContext value={mockContext}>
     <Item  id={mockProduct._id!} name={mockProduct.name!} product={mockProduct} price={mockProduct.priceData?.price!} slug={mockProduct.slug!} image={images!}/>
@@ -87,7 +152,6 @@ describe('Item Image', () => {
  });
 
  it('should render the second image when next button is clicked', async() => {
-  const images = mockProduct.media?.items?.map(item => item.image?.url || "");
   render(
    <ShopContext value={mockContext}>
     <Item  id={mockProduct._id!} name={mockProduct.name!} product={mockProduct} price={mockProduct.priceData?.price!} slug={mockProduct.slug!} image={images!}/>
@@ -102,7 +166,6 @@ describe('Item Image', () => {
  });
 
  it('should render the second image when prev button is clicked', async() => {
-  const images = mockProduct.media?.items?.map(item => item.image?.url || "");
   render(
    <ShopContext value={mockContext}>
     <Item  id={mockProduct._id!} name={mockProduct.name!} product={mockProduct} price={mockProduct.priceData?.price!} slug={mockProduct.slug!} image={images!}/>
@@ -115,10 +178,77 @@ describe('Item Image', () => {
   await user.click(prevButton)
   expect(screen.getByRole('img')).toHaveAttribute('src', 'image3')
  });
+
+ it('should navigate to /product/{slug} when image link is clicked', async() => {
+  render(
+   <ShopContext value={mockContext}>
+    <Item  id={mockProduct._id!} name={mockProduct.name!} product={mockProduct} price={mockProduct.priceData?.price!} slug={mockProduct.slug!} image={images!}/>
+   </ShopContext>
+  );
+
+  const image = screen.getByRole('img');
+  const user = userEvent.setup();
+  const link = screen.getByRole('link');
+
+  await user.click(image);
+  expect(link).toHaveAttribute('href', '/product/test-slug');
+ })
 })
 
 describe('Item Size Selection', () => {
- it('should', () => {
-  
+ it('should render all size options (from product.productOptions)', () => {
+  render(
+   <ShopContext value={mockContext}>
+    <Item  id={mockProduct._id!} name={mockProduct.name!} product={mockProduct} price={mockProduct.priceData?.price!} slug={mockProduct.slug!} image={images!}/>
+   </ShopContext>
+  );
+
+  mockProduct.productOptions?.[0].choices?.forEach(choice => {
+    expect(screen.getByText(choice.value!)).toBeInTheDocument()
+  })
  })
+
+ it('should apply black background + white text on size when clicked', async() => {
+  render(
+   <ShopContext value={mockContext}>
+    <Item  id={mockProduct._id!} name={mockProduct.name!} product={mockProduct} price={mockProduct.priceData?.price!} slug={mockProduct.slug!} image={images!}/>
+   </ShopContext>
+  );
+
+  const user = userEvent.setup();
+  const xlOption = screen.getByText('XL');
+  expect(xlOption).toBeInTheDocument();
+  expect(xlOption).not.toHaveStyle({ backgroundColor: 'rgb(0, 0, 0)', color: 'rgb(255, 255, 255)'});
+  await user.click(xlOption)
+  expect(xlOption).toHaveStyle({ backgroundColor: 'rgb(0, 0, 0)', color: 'rgb(255, 255, 255)'});
+ })
+
+ it('should call addItem & openCart when size is clicked', async() => {
+  render(
+   <ShopContext value={mockContext}>
+    <Item  id={mockProduct._id!} name={mockProduct.name!} product={mockProduct} price={mockProduct.priceData?.price!} slug={mockProduct.slug!} image={images!}/>
+   </ShopContext>
+  );
+
+  const user = userEvent.setup();
+  const xlOption = screen.getByText('XL');
+  await user.click(xlOption);
+  expect(mockAddToCart).toHaveBeenCalledWith(mockClient, '123', '21');
+  expect(mockContext.openCart).toHaveBeenCalled()
+ })
+})
+
+describe('Item Name and Price', () => {
+  it('should render item name and price', () => {
+    render(
+      <ShopContext value={mockContext}>
+        <Item  id={mockProduct._id!} name={mockProduct.name!} product={mockProduct} price={mockProduct.priceData?.price!} slug={mockProduct.slug!} image={images!}/>
+      </ShopContext>
+    );
+
+    const productPrice = screen.getByRole('paragraph', { name: /product price/i })
+    expect(screen.getByText(/test product/i)).toBeInTheDocument();
+    expect(productPrice).toBeInTheDocument();
+    expect(productPrice).toHaveTextContent('$10')
+  })
 })

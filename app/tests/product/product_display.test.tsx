@@ -79,12 +79,6 @@ const mockProduct:products.Product = {
       variant: {}
     },
     { 
-      _id: "21",
-      choices: { Size: "XL" },
-      stock: { trackQuantity: true, quantity: 31, inStock: true },
-      variant: {}
-    },
-    { 
       _id: "22",
       choices: { Size: "L" },
       stock: { trackQuantity: true, quantity: 31, inStock: true },
@@ -197,10 +191,10 @@ describe('Product Info', () => {
 })
 
 describe('Size Selection', () => {
-  it('should render size options (from product.productOptions)', () => {
+  it('should render all size options (from product.productOptions)', () => {
     render(<Product_display product={mockProduct} productId={mockProduct._id!} />)
 
-     mockProduct.productOptions?.[0].choices?.forEach(choice => {
+    mockProduct.productOptions?.[0].choices?.forEach(choice => {
       expect(screen.getByText(choice.value!)).toBeInTheDocument()
     })
   });

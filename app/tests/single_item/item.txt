@@ -24,9 +24,6 @@ Clicking M applies black background + white text.
 Clicking a size calls addItem & openCart
 When a valid variant exists for the chosen size → addItem is called with (wixClient, product._id, variant._id) and openCart is called.
 
-Invalid size does not call addItem
-If no matching variant is found → only console.log, no addItem call.
-
 🖱️ Hover size bar
 
 Hover shows size selector

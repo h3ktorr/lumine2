@@ -19,11 +19,13 @@ const Shop_all_collections = () => {
     <div
       ref={collectionRef}
       onClick={handleCollectionClose}
+      role="dialog"
+      aria-label="shop all collection"
       className={isAllCollectionsOpen ?"opacity-100 z-50 visible translate-y-0 fixed top-0 w-screen h-screen flex justify-center items-center bg-black/50 transition-all duration-500 ease-in ":"fixed top-0 w-screen h-screen opacity-0 invisible flex justify-center items-center bg-black/50 -z-50 -translate-y-full transition-all duration-500 ease-in"}>
       <div className="bg-white w-[60%] h-[80%] flex flex-col justify-center items-center rounded-[10px] gap-8 font-Itim">
         <div className="flex justify-between items-center gap-10 md:gap-40 text-xl sm:text-2xl pt-8 px-4 md:px-0 md:pt-0">
           <h2 className="">Shop All Collection</h2>
-          <X size={24} color="#000" className="cursor-pointer" onClick={closeAllCollections}/>
+          <X role="button" aria-label="close collection" size={24} color="#000" className="cursor-pointer" onClick={closeAllCollections}/>
         </div>
       
       <div className="flex flex-col md:flex-row gap-10 md:gap-24 overflow-auto overscroll-contain scroll-hidden">

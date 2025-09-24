@@ -22,7 +22,6 @@ const Item = (props: Props) => {
  const { image, price, name, slug, product } = props;
  const [index, setIndex] = useState(0);
  const [isHovered, setIsHovered] = useState(false);
- const sizes = ["XXL", "XL", "L", "M", "S", "XS", "XXS"];
  const [selectedSize, setSelectedSize] = useState("");
  const { openCart } = useContext(ShopContext)!;
 
@@ -78,11 +77,13 @@ const handlePrevImage = () => {
        <div 
         className={isHovered ? "absolute flex w-full justify-between transition-all duration-500 items-center h-8 gap-1 bg-[#d6d2d2] top-0" : "absolute flex w-full justify-between transition-all duration-500 items-center h-8 gap-1 bg-[#d6d2d2] -top-8"}
       >
-        {sizes.map((size, sizeIndex) => (
-          <div 
+        {product.productOptions?.map(option=>(
+        option.choices!.map((choice, sizeIndex)=>{
+        let size = choice.value
+          return (<div 
             className="w-9 text-center border-black border-[.1rem] cursor-pointer hover:bg-white"
             key={sizeIndex}
-            onClick={() => handleSizeChange(size)}
+            onClick={() => handleSizeChange(size!)}
             style={
               selectedSize === size
                 ? {
@@ -94,7 +95,7 @@ const handlePrevImage = () => {
           >
             {size}
           </div>
-        ))}
+        )})))}
        </div>
       </div>
       <div className="">
@@ -110,7 +111,7 @@ const handlePrevImage = () => {
       </div>
      </div>
      <p className="text-[.9rem] md:text-base">{name}</p>
-     <p className="text-[.9rem] md:text-base">${price}</p>
+     <p aria-label='product price' className="text-[.9rem] md:text-base">${price}</p>
     </div>
   )
 }
