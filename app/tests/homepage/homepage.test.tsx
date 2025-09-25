@@ -92,5 +92,57 @@ describe('Homepage Shop All Collection', () => {
 
   await user.click(shopAllCollections);
   expect(mockContext.closeAllCollections).toBeCalled();
+ });
+
+ it('should render headings correctly and clicking heading should close the modal', async() => {
+  render(
+   <ShopContext value={{...mockContext, isAllCollectionsOpen: true}}>
+    <Shop_all_collections />
+   </ShopContext>
+  );
+
+  const mensHeading = screen.getByText("Men's Clothes");
+  const womensHeading = screen.getByText("Women's Clothes");
+  const user = userEvent.setup();
+
+  expect(mensHeading).toBeInTheDocument();
+  expect(womensHeading).toBeInTheDocument();
+  await user.click(womensHeading);
+  expect(mockContext.closeAllCollections).toHaveBeenCalled();
+ });
+
+ it('should render subheadings correctly and clicking subheading should close the modal', async() => {
+  render(
+   <ShopContext value={{...mockContext, isAllCollectionsOpen: true}}>
+    <Shop_all_collections />
+   </ShopContext>
+  );
+
+  mockContext.sidebarLinks.forEach(item=>{
+    item.links.forEach(link=>{
+      expect(screen.getByText(`${item.name}'s ${link.link_name}`)).toBeInTheDocument();
+    })
+  });
+
+  const linkName = screen.getByText(/women's top/i);
+  const user = userEvent.setup();
+
+  await user.click(linkName);
+  expect(mockContext.closeAllCollections).toHaveBeenCalled()
+ });
+
+ it('should render heading and subLink linking to its address respectively', () => {
+  render(
+   <ShopContext value={{...mockContext, isAllCollectionsOpen: true}}>
+    <Shop_all_collections />
+   </ShopContext>
+  );
+
+  const headingLink = screen.getByRole("link", { name: "Men's Clothes" });
+  const subLink = screen.getByRole("link", { name: /women's top/i });
+  expect(headingLink).toBeInTheDocument();
+  expect(subLink).toBeInTheDocument();
+  expect(headingLink).toHaveAttribute("href", "./mens");
+  expect(subLink).toHaveAttribute("href", "./women/top");
  })
 })

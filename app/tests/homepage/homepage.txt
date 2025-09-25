@@ -1,0 +1,49 @@
+🧪 Tests for Shop_all_collections
+Rendering & State
+
+Renders closed by default
+
+When isAllCollectionsOpen = false, modal has opacity-0 invisible -translate-y-full -z-50.
+
+Renders open when active
+
+When isAllCollectionsOpen = true, modal has opacity-100 visible translate-y-0 z-50.
+
+Closing behavior
+
+Close button (X) works
+
+Clicking the X icon calls closeAllCollections.
+
+Clicking overlay (outside modal) closes modal
+
+Simulate click on backdrop (the div with collectionRef) → closeAllCollections is called.
+
+Clicking inside modal does not close
+
+Simulate click inside modal content → closeAllCollections should not be called.
+
+Links & Navigation
+
+Collection headings render correctly
+
+For each sidebarLinks entry, heading text is displayed as "{name}'s Clothes".
+
+Sub-links render correctly
+
+For each sublink, text is "{name}'s {link_name}".
+
+Clicking heading closes modal
+
+Clicking collection heading link should call closeAllCollections.
+
+Clicking sub-link closes modal
+
+Clicking any sublink should also call closeAllCollections.
+
+Correct href values
+
+Collection heading links to address.
+
+Sublinks link to link_address.
+
