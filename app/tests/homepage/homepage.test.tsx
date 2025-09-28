@@ -50,8 +50,7 @@ describe('Homepage Shop All Collection', () => {
   );
 
   const shopAllCollections = screen.getByRole('dialog', {name: /shop all collection/i})
-  expect(shopAllCollections).not.toBeVisible
-  expect(shopAllCollections).toHaveClass('opacity-0', '-translate-y-full', '-z-50')
+  expect(shopAllCollections).toHaveClass('opacity-0', 'invisible', '-translate-y-full', '-z-50')
  });
 
  it('should render open when active', () => {
@@ -62,7 +61,7 @@ describe('Homepage Shop All Collection', () => {
   );
 
   const shopAllCollections = screen.getByRole('dialog', {name: /shop all collection/i})
-  expect(shopAllCollections).toBeVisible
+  expect(shopAllCollections).toBeVisible()
   expect(shopAllCollections).toHaveClass('opacity-100', 'translate-y-0', 'z-50')
  });
 
@@ -142,7 +141,7 @@ describe('Homepage Shop All Collection', () => {
   const subLink = screen.getByRole("link", { name: /women's top/i });
   expect(headingLink).toBeInTheDocument();
   expect(subLink).toBeInTheDocument();
-  expect(headingLink).toHaveAttribute("href", "./mens");
+  expect(headingLink).toHaveAttribute("href", "./men");
   expect(subLink).toHaveAttribute("href", "./women/top");
  })
 })

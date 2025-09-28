@@ -2,7 +2,7 @@ const sidebar_data = [
   {
     name: "Men",
     id: 1,
-    address: "./mens",
+    address: "./men",
     categoryState: false,
     links: [
       {
@@ -30,7 +30,7 @@ const sidebar_data = [
   {
     name: "Women",
     id: 2,
-    address: "./womens",
+    address: "./women",
     categoryState: false,
     links: [
       {
